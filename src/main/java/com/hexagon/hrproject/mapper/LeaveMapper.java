@@ -10,12 +10,12 @@ import com.hexagon.hrproject.domain.LeaveUsage;
 
 public interface LeaveMapper {
 	// 나의 휴가 잔액
-	LeaveBalance findBalanceByEmpId(@Param("empId") int empId, @Param("fiscalYear") String fiscalYear);
+	LeaveBalance selectBalanceByEmpId(@Param("empId") int empId, @Param("fiscalYear") String fiscalYear);
 
 	// 나의 휴가 사용 내역
-	List<LeaveUsage> findUsedLeaveByEmpId(@Param("empId") int empId);
+	List<LeaveUsage> selectUsedLeaveByEmpId(@Param("empId") int empId);
 	
-	List<LeaveRequestHistory> findRequestHistoryByEmpId(
+	List<LeaveRequestHistory> selectRequestHistoryByEmpId(
 		    @Param("empId") int empId
 		);
 	

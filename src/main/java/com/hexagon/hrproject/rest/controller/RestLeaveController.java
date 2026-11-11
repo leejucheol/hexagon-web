@@ -27,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/leave")
 @RequiredArgsConstructor
-public class LeaveApiController {
+public class RestLeaveController {
 
 	private final LeaveService leaveService;
 
@@ -53,7 +53,7 @@ public class LeaveApiController {
 
 		String fiscalYear = String.valueOf(Year.now(ZoneId.of("Asia/Seoul")).getValue());
 
-		return leaveService.findBalanceByEmpId(empId, fiscalYear);
+		return leaveService.getBalanceByEmpId(empId, fiscalYear);
 	}
 
 	// 나의 휴가 사용 내역 조회
@@ -62,7 +62,7 @@ public class LeaveApiController {
 
 		int empId = getLoginEmpId(accountDetails);
 
-		return leaveService.findUsedLeaveByEmpId(empId);
+		return leaveService.getUsedLeaveByEmpId(empId);
 	}
 
 	// 로그인한 사원의 휴가 신청 내역
@@ -71,7 +71,7 @@ public class LeaveApiController {
 
 		int empId = getLoginEmpId(accountDetails);
 
-		return leaveService.findRequestHistoryByEmpId(empId);
+		return leaveService.getRequestHistoryByEmpId(empId);
 
 	}
 

@@ -26,21 +26,21 @@ public class LeaveService {
 	private final LeaveMapper leaveMapper;
 
 	// 휴가 잔액
-	public LeaveBalance findBalanceByEmpId(int empId, String fiscalYear) {
+	public LeaveBalance getBalanceByEmpId(int empId, String fiscalYear) {
 
-		return leaveMapper.findBalanceByEmpId(empId, fiscalYear);
+		return leaveMapper.selectBalanceByEmpId(empId, fiscalYear);
 	}
 
 	// 휴가 사용 내역
-	public List<LeaveUsage> findUsedLeaveByEmpId(int empId) {
+	public List<LeaveUsage> getUsedLeaveByEmpId(int empId) {
 
-		return leaveMapper.findUsedLeaveByEmpId(empId);
+		return leaveMapper.selectUsedLeaveByEmpId(empId);
 	}
 
 	// 로그인한 사원의 전체 휴가 신청 내역
-	public List<LeaveRequestHistory> findRequestHistoryByEmpId(int empId) {
+	public List<LeaveRequestHistory> getRequestHistoryByEmpId(int empId) {
 
-		return leaveMapper.findRequestHistoryByEmpId(empId);
+		return leaveMapper.selectRequestHistoryByEmpId(empId);
 
 	}
 

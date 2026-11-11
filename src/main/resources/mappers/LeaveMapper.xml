@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hexagon.hrproject.mapper.LeaveMapper">
-	<select id="findBalanceByEmpId"
+	<select id="selectBalanceByEmpId"
 		resultType="com.hexagon.hrproject.domain.LeaveBalance">
 		SELECT
 		balance_id AS balanceId,
@@ -21,7 +21,7 @@
 
 
 	<!-- 로그인한 사원의 휴가 사용 내역 -->
-	<select id="findUsedLeaveByEmpId"
+	<select id="selectUsedLeaveByEmpId"
 		resultType="com.hexagon.hrproject.domain.LeaveUsage">
 
 		SELECT
@@ -40,7 +40,7 @@
 
 
 	<!-- 로그인한 사원의 전체 휴가 신청 내역 -->
-	<select id="findRequestHistoryByEmpId"
+	<select id="selectRequestHistoryByEmpId"
 		resultType="com.hexagon.hrproject.domain.LeaveRequestHistory">
 
 		SELECT
