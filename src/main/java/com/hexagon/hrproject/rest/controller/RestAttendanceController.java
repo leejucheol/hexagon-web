@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/attendance")
 @RequiredArgsConstructor
-public class AttendanceApiController {
+public class RestAttendanceController {
 
     private final AttendanceService attendanceService;
 
@@ -47,12 +47,12 @@ public class AttendanceApiController {
 
     // 나의 근태 현황 조회
     @GetMapping("/my")
-    public List<Attendance> myAttendance(
+    public List<Attendance> getMyList(
             @AuthenticationPrincipal AccountDetails accountDetails) {
 
         int empId = getLoginEmpId(accountDetails);
 
-        return attendanceService.findByEmpId(empId);
+        return attendanceService.getMyList(empId);
     }
 
     // 출근하기

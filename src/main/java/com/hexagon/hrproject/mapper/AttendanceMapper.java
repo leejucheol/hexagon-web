@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import com.hexagon.hrproject.domain.Attendance;
 
 public interface AttendanceMapper {
-	List<Attendance> findByEmpId(int empId);
+	List<Attendance> selectByEmpId(int empId);
 	
 	int insertClockIn(
 	        @Param("empId") int empId,

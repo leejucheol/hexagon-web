@@ -21,8 +21,8 @@ public class AttendanceService {
 
 	private static final ZoneId KOREA = ZoneId.of("Asia/Seoul");
 
-	public List<Attendance> findByEmpId(int empId) {
-		return attendanceMapper.findByEmpId(empId);
+	public List<Attendance> getMyList(int empId) {
+		return attendanceMapper.selectByEmpId(empId);
 	}
 
 	public int clockIn(int empId) {
