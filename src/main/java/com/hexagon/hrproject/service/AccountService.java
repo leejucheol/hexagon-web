@@ -35,7 +35,7 @@ public class AccountService {
 
         // 계정 조회
         Account account =
-                accountMapper.selectByIdNum((long) accountId);
+                accountMapper.select((long) accountId);
 
         if (account == null) {
             throw new BusinessException(
@@ -116,10 +116,10 @@ public class AccountService {
     // ----------------------------------------
     // 5. 특정 계정 상세 조회
     // ----------------------------------------
-    public Account getAccountById(Long accountId) {
+    public Account getDetail(Long accountId) {
 
         Account account =
-                accountMapper.selectByIdNum(accountId);
+                accountMapper.select(accountId);
 
         if (account == null) {
             throw new BusinessException(
@@ -139,7 +139,7 @@ public class AccountService {
             List<Long> roleIds) {
 
         // 계정 존재 여부 확인
-        getAccountById(accountId);
+        getDetail(accountId);
 
         // 기존 권한 삭제
         accountMapper.deleteAccountRolesByAccountId(accountId);
@@ -158,12 +158,12 @@ public class AccountService {
     // ----------------------------------------
     // 7. 계정 목록 조회 및 검색 ← 새로 추가하는 부분
     // ----------------------------------------
-    public List<Account> getAccountList(String keyword) {
+    public List<Account> search(String keyword) {
 
         if (keyword != null) {
             keyword = keyword.trim();
         }
 
-        return accountMapper.selectAccountList(keyword);
+        return accountMapper.search(keyword);
     }
 }

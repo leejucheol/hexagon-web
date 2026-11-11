@@ -10,7 +10,7 @@ import com.hexagon.hrproject.domain.HrRole; // HrRole 임포트 필요
 @Mapper
 public interface AccountMapper {
 
-	Account selectById(String loginId);
+	Account selectByLoginId(String loginId);
 
 	int insert(Account account);
 
@@ -24,7 +24,7 @@ public interface AccountMapper {
 	List<HrRole> selectAllRoles();
 
 	// 2. 특정 계정 상세 정보 조회
-	Account selectByIdNum(Long accountId);
+	Account select(Long accountId);
 
 	// 3. 특정 계정의 기존 권한 전체 삭제
 	void deleteAccountRolesByAccountId(Long accountId);
@@ -36,7 +36,7 @@ public interface AccountMapper {
 	int updatePassword(@Param("accountId") int accountId, @Param("password") String password);
 
 	// 이름 또는 로그인 아이디로 계정 목록 검색
-	List<Account> selectAccountList(@Param("keyword") String keyword);
+	List<Account> search(@Param("keyword") String keyword);
 
 	// 용훈 추가
 	int insertDefaultEmployeeRole(@Param("accountId") int accountId);

@@ -31,13 +31,13 @@ public class AccountController {
 
     // 계정 목록
     @GetMapping({ "", "/" })
-    public String getAccountList(
+    public String accountList(
             @RequestParam(value = "keyword", required = false)
                 String keyword,
             Model model) {
 
         List<Account> accountList =
-            accountService.getAccountList(keyword);
+            accountService.search(keyword);
 
         model.addAttribute("accountList", accountList);
         model.addAttribute(
@@ -55,7 +55,7 @@ public class AccountController {
             Model model) {
 
         Account account =
-            accountService.getAccountById(accountId);
+            accountService.getDetail(accountId);
 
         List<HrRole> roleList =
             accountService.getAllRoles();

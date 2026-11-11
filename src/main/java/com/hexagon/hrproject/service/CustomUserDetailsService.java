@@ -15,13 +15,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CustormUserDetailsService implements UserDetailsService{
+public class CustomUserDetailsService implements UserDetailsService{
 	private final AccountMapper accountMapper;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
-		Account account = accountMapper.selectById(username);
+		Account account = accountMapper.selectByLoginId(username);
 		
 		return new AccountDetails(account);
 	}

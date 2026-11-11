@@ -2,7 +2,7 @@ package com.hexagon.hrproject.spring.security;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-public class PasswordCreateor {
+public class PasswordCreator {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
