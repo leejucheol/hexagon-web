@@ -22,7 +22,11 @@ public class CustomUserDetailsService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
 		Account account = accountMapper.selectByLoginId(username);
-		
+
+		if (account == null) {
+			throw new UsernameNotFoundException("존재하지 않는 계정입니다: " + username);
+		}
+
 		return new AccountDetails(account);
 	}
 
