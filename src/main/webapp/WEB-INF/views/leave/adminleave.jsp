@@ -394,32 +394,32 @@
 </head>
 <body style="margin: 0;">
 <<<<<<< HEAD:src/main/webapp/WEB-INF/views/leave/adminLeaveRequests.jsp
-	<!-- íë©´ íì¸ì© ì¬ì´ëë° ìë¦¬. JSPììë íë¡ì í¸ì sidebar.jspfê° ì¬ì©ë©ëë¤. -->
+	<!-- 화면 확인용 사이드바 자리. JSP에서는 프로젝트의 sidebar.jspf가 사용됩니다. -->
 	<aside
 		style="position: fixed; top: 0; left: 0; bottom: 0; width: 250px; background: #172238; color: #c5d1e5; padding: 28px 19px; font: 14px Arial;">
 		<div
 			style="font-size: 19px; font-weight: bold; color: white; margin-bottom: 27px">HEXAGON
 			HRMS</div>
-		<div style="padding: 12px 8px; border-bottom: 1px solid #344058">ì¸ì¬
-			ê´ë¦¬</div>
-		<div style="padding: 12px 8px; border-bottom: 1px solid #344058">ê·¼í
-			ê´ë¦¬</div>
-		<div style="padding: 12px 8px; border-bottom: 1px solid #344058">í´ê°
-			ê´ë¦¬</div>
-		<div style="padding: 12px 8px; border-bottom: 1px solid #344058">ê´ë¦¬ì
-			ë©ë´</div>
+		<div style="padding: 12px 8px; border-bottom: 1px solid #344058">인사
+			관리</div>
+		<div style="padding: 12px 8px; border-bottom: 1px solid #344058">근태
+			관리</div>
+		<div style="padding: 12px 8px; border-bottom: 1px solid #344058">휴가
+			관리</div>
+		<div style="padding: 12px 8px; border-bottom: 1px solid #344058">관리자
+			메뉴</div>
 	</aside>
 	<div class="alr-content-area">
 		<main class="alr-page">
 		
 			<header class="alr-heading">
 				<div>
-					<h1 class="alr-title">ì§ì í´ê° ì ì²­ ê´ë¦¬</h1>
-					<p class="alr-subtitle">ë´ë¹ ì§ìì í´ê° ì ì²­ì
-						ì¡°ííê³  ì¹ì¸ ìíë¥¼ íì¸í©ëë¤.</p>
+					<h1 class="alr-title">직원 휴가 신청 관리</h1>
+					<p class="alr-subtitle">담당 직원의 휴가 신청을
+						조회하고 승인 상태를 확인합니다.</p>
 				</div>
-				<span class="alr-demo">íë©´ ìì ë°ì´í° Â· DB
-					ë¯¸ì°ê²°</span>
+				<span class="alr-demo">화면 예시 데이터 · DB
+					미연결</span>
 			</header>
 =======
 >>>>>>> origin/develop:src/main/webapp/WEB-INF/views/leave/adminleave.jsp

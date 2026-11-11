@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ë¶ì ê·¼í íí©</title>
+<title>부서 근태 현황</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <style>
-/* ë¶ì ê·¼í ê´ë¦¬ì íë©´ ì ì©. ì¬ì´ëë°Â·ê³µíµ ë ì´ììì ìí¥ì ì£¼ì§ ììµëë¤. */
+/* 부서 근태 관리자 화면 전용. 사이드바·공통 레이아웃에 영향을 주지 않습니다. */
 .dat-content-area {
 	margin-left: 250px;
 	min-width: 0;
@@ -378,110 +378,110 @@
 </style>
 </head>
 <body style="margin: 0;">
-	<!-- íë©´ íì¸ì© ì¬ì´ëë° ìë¦¬. JSPììë íë¡ì í¸ì sidebar.jspfê° ì¬ì©ë©ëë¤. -->
+	<!-- 화면 확인용 사이드바 자리. JSP에서는 프로젝트의 sidebar.jspf가 사용됩니다. -->
 	<aside
 		style="position: fixed; top: 0; left: 0; bottom: 0; width: 250px; background: #172238; color: #c5d1e5; padding: 28px 19px; font: 14px Arial;">
 		<div
 			style="font-size: 19px; font-weight: bold; color: white; margin-bottom: 27px">HEXAGON
 			HRMS</div>
-		<div style="padding: 12px 8px; border-bottom: 1px solid #344058">ì¸ì¬
-			ê´ë¦¬</div>
-		<div style="padding: 12px 8px; border-bottom: 1px solid #344058">ê·¼í
-			ê´ë¦¬</div>
-		<div style="padding: 12px 8px; border-bottom: 1px solid #344058">í´ê°
-			ê´ë¦¬</div>
-		<div style="padding: 12px 8px; border-bottom: 1px solid #344058">ê´ë¦¬ì
-			ë©ë´</div>
+		<div style="padding: 12px 8px; border-bottom: 1px solid #344058">인사
+			관리</div>
+		<div style="padding: 12px 8px; border-bottom: 1px solid #344058">근태
+			관리</div>
+		<div style="padding: 12px 8px; border-bottom: 1px solid #344058">휴가
+			관리</div>
+		<div style="padding: 12px 8px; border-bottom: 1px solid #344058">관리자
+			메뉴</div>
 	</aside>
 	<div class="dat-content-area">
 		<main class="dat-page">
 		
 			<header class="dat-header">
 				<div>
-					<h1 class="dat-title">ë¶ì ê·¼í íí©</h1>
-					<p class="dat-subtitle">ê°ì ë¶ì ì§ìì ì¼ë³
-						ì¶í´ê·¼ ë° ê·¼í ìíë¥¼ íì¸í©ëë¤.</p>
+					<h1 class="dat-title">부서 근태 현황</h1>
+					<p class="dat-subtitle">같은 부서 직원의 일별
+						출퇴근 및 근태 상태를 확인합니다.</p>
 				</div>
-				<span class="dat-demo">íë©´ ìì ë°ì´í° Â· DB
-					ë¯¸ì°ê²°</span>
+				<span class="dat-demo">화면 예시 데이터 · DB
+					미연결</span>
 			</header>
 
 			<section class="dat-panel dat-filter"
-				aria-label="ë¶ì ê·¼í ì¡°í ì¡°ê±´">
+				aria-label="부서 근태 조회 조건">
 				<div class="dat-field">
-					<label for="datDepartment">ì¡°í ë¶ì</label><input
+					<label for="datDepartment">조회 부서</label><input
 						id="datDepartment" type="text" name="departmentLabel"
-						value="ê°ë°í (ìì)" readonly>
+						value="개발팀 (예시)" readonly>
 				</div>
 				<div class="dat-field">
-					<label for="datWorkDate">ê·¼ë¬´ ì¼ì</label><input
+					<label for="datWorkDate">근무 일자</label><input
 						id="datWorkDate" name="workDate" type="date" value="2026-11-05">
 				</div>
 				<div class="dat-field">
-					<label for="datStatus">ê·¼í ìí</label> <select id="datStatus"
-						name="attendanceStatus"><option value="ALL">ì ì²´</option>
-						<option value="NORMAL">ì ì ì¶ê·¼</option>
-						<option value="LATE">ì§ê°</option>
-						<option value="EARLY">ì¡°í´</option>
-						<option value="LEAVE">í´ê°</option>
-						<option value="UNKNOWN">ë¯¸ê¸°ë¡</option></select>
+					<label for="datStatus">근태 상태</label> <select id="datStatus"
+						name="attendanceStatus"><option value="ALL">전체</option>
+						<option value="NORMAL">정상 출근</option>
+						<option value="LATE">지각</option>
+						<option value="EARLY">조퇴</option>
+						<option value="LEAVE">휴가</option>
+						<option value="UNKNOWN">미기록</option></select>
 				</div>
 				<div class="dat-field dat-grow">
-					<label for="datKeyword">ì§ì ê²ì</label><input id="datKeyword"
+					<label for="datKeyword">직원 검색</label><input id="datKeyword"
 						name="attendanceKeyword" type="search"
-						placeholder="ì´ë¦ ëë ì¬ë²">
+						placeholder="이름 또는 사번">
 				</div>
 				<div class="dat-btn-row">
 					<button type="button" class="dat-btn dat-btn-primary"
-						name="searchDepartmentAttendance">ê·¼í ì¡°í</button>
+						name="searchDepartmentAttendance">근태 조회</button>
 					<button type="button" class="dat-btn"
-						name="resetDepartmentAttendance">ì´ê¸°í</button>
+						name="resetDepartmentAttendance">초기화</button>
 				</div>
 			</section>
 
-			<section class="dat-stats" aria-label="ë¶ì ê·¼í ìì½">
+			<section class="dat-stats" aria-label="부서 근태 요약">
 				<div class="dat-stat">
-					<div class="dat-stat-label">ì¡°í ì§ì</div>
-					<div class="dat-stat-value" name="allEmployees">0ëª</div>
+					<div class="dat-stat-label">조회 직원</div>
+					<div class="dat-stat-value" name="allEmployees">0명</div>
 				</div>
 				<div class="dat-stat">
-					<div class="dat-stat-label">ì ì ì¶ê·¼</div>
-					<div class="dat-stat-value" name="normalEmployees">0ëª</div>
+					<div class="dat-stat-label">정상 출근</div>
+					<div class="dat-stat-value" name="normalEmployees">0명</div>
 				</div>
 				<div class="dat-stat">
-					<div class="dat-stat-label">ì§ê° Â· ì¡°í´</div>
-					<div class="dat-stat-value" name="lateEmployees">0ëª</div>
+					<div class="dat-stat-label">지각 · 조퇴</div>
+					<div class="dat-stat-value" name="lateEmployees">0명</div>
 				</div>
 				<div class="dat-stat">
-					<div class="dat-stat-label">í´ê° Â· ë¯¸ê¸°ë¡</div>
-					<div class="dat-stat-value" name="otherEmployees">0ëª</div>
+					<div class="dat-stat-label">휴가 · 미기록</div>
+					<div class="dat-stat-value" name="otherEmployees">0명</div>
 				</div>
 			</section>
 
-			<section class="dat-panel" aria-label="ë¶ì ì§ì ê·¼í ëª©ë¡">
+			<section class="dat-panel" aria-label="부서 직원 근태 목록">
 				<div class="dat-panel-head">
-					<h2 class="dat-section-title">ì§ìë³ ê·¼í ëª©ë¡</h2>
-					<span class="dat-count" name="attendanceCount">ì´ 0ëª</span>
+					<h2 class="dat-section-title">직원별 근태 목록</h2>
+					<span class="dat-count" name="attendanceCount">총 0명</span>
 				</div>
 				<div class="dat-scroll">
 					<table class="dat-table">
 						<thead>
 							<tr>
-								<th>ì¬ë²</th>
-								<th>ì§ìëª</th>
-								<th>ê·¼ë¬´ ì¼ì</th>
-								<th>ì¶ê·¼ ìê°</th>
-								<th>í´ê·¼ ìê°</th>
-								<th>ê·¼í ìí</th>
-								<th>ìì¸</th>
+								<th>사번</th>
+								<th>직원명</th>
+								<th>근무 일자</th>
+								<th>출근 시간</th>
+								<th>퇴근 시간</th>
+								<th>근태 상태</th>
+								<th>상세</th>
 							</tr>
 						</thead>
 						<tbody name="departmentAttendanceRows"></tbody>
 					</table>
 				</div>
-				<div class="dat-footer">â» ë¯¸ê¸°ë¡ì ê²°ê·¼ íì ì´
-					ìëëë¤. í´ê° ì¬ë¶ ë° ê·¼ë¬´ ì¼ì ê³¼ í¨ê»
-					íì¸í´ì¼ í©ëë¤.</div>
+				<div class="dat-footer">※ 미기록은 결근 확정이
+					아닙니다. 휴가 여부 및 근무 일정과 함께
+					확인해야 합니다.</div>
 			</section>
 		</main>
 	</div>
@@ -490,28 +490,28 @@
 		aria-modal="true" aria-labelledby="datDetailTitle">
 		<div class="dat-dialog">
 			<div class="dat-dialog-head">
-				<h2 id="datDetailTitle">ì§ì ê·¼í ìì¸</h2>
+				<h2 id="datDetailTitle">직원 근태 상세</h2>
 				<button type="button" class="dat-close" name="closeAttendanceDetail"
-					aria-label="ë«ê¸°">Ã</button>
+					aria-label="닫기">×</button>
 			</div>
 			<dl class="dat-detail" name="attendanceDetailContent"></dl>
 			<div class="dat-dialog-bottom">
-				<button type="button" class="dat-btn" name="closeAttendanceDetail">ë«ê¸°</button>
+				<button type="button" class="dat-btn" name="closeAttendanceDetail">닫기</button>
 			</div>
 		</div>
 	</div>
 	<script>
-// ê°ë°ì© ìì. ì¤ì  êµ¬íì ë¡ê·¸ì¸ ê´ë¦¬ìì ë¶ìë¥¼ ìë²ê° íì í´ ì¡°íí´ì¼ í©ëë¤.
+// 개발용 예시. 실제 구현은 로그인 관리자의 부서를 서버가 판정해 조회해야 합니다.
 const departmentAttendanceDemo = [
-    {empId:1, name:"ê¹ë¯¼ì¤", department:"ê°ë°í", date:"2026-11-05", clockIn:"08:56", clockOut:"--:--", status:"NORMAL", note:"ì ì ì¶ê·¼"},
-    {empId:4, name:"ì´ìì°", department:"ê°ë°í", date:"2026-11-05", clockIn:"09:12", clockOut:"--:--", status:"LATE", note:"ì¶ê·¼ ìê° ì§ì°"},
-    {empId:7, name:"ë°ì§í", department:"ê°ë°í", date:"2026-11-05", clockIn:"08:51", clockOut:"--:--", status:"NORMAL", note:"ì ì ì¶ê·¼"},
-    {empId:9, name:"ìµì ì§", department:"ê°ë°í", date:"2026-11-05", clockIn:"08:57", clockOut:"15:30", status:"EARLY", note:"ì¡°í´ ì²ë¦¬"},
-    {empId:11, name:"ì ëí", department:"ê°ë°í", date:"2026-11-05", clockIn:"--:--", clockOut:"--:--", status:"LEAVE", note:"ì¹ì¸ë í´ê°"},
-    {empId:13, name:"íì§ë¯¼", department:"ê°ë°í", date:"2026-11-05", clockIn:"--:--", clockOut:"--:--", status:"UNKNOWN", note:"ê·¼í ê¸°ë¡ íì¸ íì"},
-    {empId:16, name:"ì¤íë", department:"ê°ë°í", date:"2026-11-05", clockIn:"09:00", clockOut:"--:--", status:"NORMAL", note:"ì ì ì¶ê·¼"}
+    {empId:1, name:"김민준", department:"개발팀", date:"2026-11-05", clockIn:"08:56", clockOut:"--:--", status:"NORMAL", note:"정상 출근"},
+    {empId:4, name:"이서연", department:"개발팀", date:"2026-11-05", clockIn:"09:12", clockOut:"--:--", status:"LATE", note:"출근 시간 지연"},
+    {empId:7, name:"박지훈", department:"개발팀", date:"2026-11-05", clockIn:"08:51", clockOut:"--:--", status:"NORMAL", note:"정상 출근"},
+    {empId:9, name:"최유진", department:"개발팀", date:"2026-11-05", clockIn:"08:57", clockOut:"15:30", status:"EARLY", note:"조퇴 처리"},
+    {empId:11, name:"정도현", department:"개발팀", date:"2026-11-05", clockIn:"--:--", clockOut:"--:--", status:"LEAVE", note:"승인된 휴가"},
+    {empId:13, name:"한지민", department:"개발팀", date:"2026-11-05", clockIn:"--:--", clockOut:"--:--", status:"UNKNOWN", note:"근태 기록 확인 필요"},
+    {empId:16, name:"윤하늘", department:"개발팀", date:"2026-11-05", clockIn:"09:00", clockOut:"--:--", status:"NORMAL", note:"정상 출근"}
 ];
-const deptStatusText = {NORMAL:"ì ì ì¶ê·¼", LATE:"ì§ê°", EARLY:"ì¡°í´", LEAVE:"í´ê°", UNKNOWN:"ë¯¸ê¸°ë¡"};
+const deptStatusText = {NORMAL:"정상 출근", LATE:"지각", EARLY:"조퇴", LEAVE:"휴가", UNKNOWN:"미기록"};
 const deptStatusClass = {NORMAL:"dat-pill-normal", LATE:"dat-pill-late", EARLY:"dat-pill-early", LEAVE:"dat-pill-leave", UNKNOWN:"dat-pill-unknown"};
 const getDepartmentAttendance = function() {
     const selectedDate = $("input[name='workDate']").val();
@@ -522,13 +522,13 @@ const getDepartmentAttendance = function() {
             && (!keyword || item.name.toLowerCase().includes(keyword) || String(item.empId).includes(keyword));
     });
     const $tbody = $("tbody[name='departmentAttendanceRows']").empty();
-    $("div[name='allEmployees']").text(rows.length + "ëª");
-    $("div[name='normalEmployees']").text(rows.filter(r => r.status === "NORMAL").length + "ëª");
-    $("div[name='lateEmployees']").text(rows.filter(r => r.status === "LATE" || r.status === "EARLY").length + "ëª");
-    $("div[name='otherEmployees']").text(rows.filter(r => r.status === "LEAVE" || r.status === "UNKNOWN").length + "ëª");
-    $("span[name='attendanceCount']").text("ì´ " + rows.length + "ëª");
+    $("div[name='allEmployees']").text(rows.length + "명");
+    $("div[name='normalEmployees']").text(rows.filter(r => r.status === "NORMAL").length + "명");
+    $("div[name='lateEmployees']").text(rows.filter(r => r.status === "LATE" || r.status === "EARLY").length + "명");
+    $("div[name='otherEmployees']").text(rows.filter(r => r.status === "LEAVE" || r.status === "UNKNOWN").length + "명");
+    $("span[name='attendanceCount']").text("총 " + rows.length + "명");
     if (rows.length === 0) {
-        $tbody.append($("<tr>").append($("<td>", {colspan:7, "class":"dat-empty", text:"ì¡°íë ê·¼í ë´ì­ì´ ììµëë¤."})));
+        $tbody.append($("<tr>").append($("<td>", {colspan:7, "class":"dat-empty", text:"조회된 근태 내역이 없습니다."})));
         return;
     }
     rows.forEach(function(item) {
@@ -539,7 +539,7 @@ const getDepartmentAttendance = function() {
         $tr.append($("<td>").text(item.clockIn));
         $tr.append($("<td>").text(item.clockOut));
         $tr.append($("<td>").append($("<span>", {"class":"dat-pill " + deptStatusClass[item.status], text:deptStatusText[item.status]})));
-        $tr.append($("<td>").append($("<button>", {type:"button", "class":"dat-btn dat-btn-small", text:"ìì¸", "data-emp-id":item.empId})));
+        $tr.append($("<td>").append($("<button>", {type:"button", "class":"dat-btn dat-btn-small", text:"상세", "data-emp-id":item.empId})));
         $tbody.append($tr);
     });
 };
@@ -547,8 +547,8 @@ const showDepartmentAttendanceDetail = function(empId) {
     const selectedDate = $("input[name='workDate']").val();
     const item = departmentAttendanceDemo.find(row => row.empId === empId && row.date === selectedDate);
     if (!item) return;
-    const details = [["ì¬ë²",item.empId],["ì§ìëª",item.name],["ìì ë¶ì",item.department],["ê·¼ë¬´ ì¼ì",item.date],
-        ["ì¶ê·¼ ìê°",item.clockIn],["í´ê·¼ ìê°",item.clockOut],["ê·¼í ìí",deptStatusText[item.status]],["ë¹ê³ ",item.note]];
+    const details = [["사번",item.empId],["직원명",item.name],["소속 부서",item.department],["근무 일자",item.date],
+        ["출근 시간",item.clockIn],["퇴근 시간",item.clockOut],["근태 상태",deptStatusText[item.status]],["비고",item.note]];
     const $content = $("dl[name='attendanceDetailContent']").empty();
     details.forEach(function(pair) { $content.append($("<dt>").text(pair[0])); $content.append($("<dd>").text(pair[1])); });
     $("div[name='attendanceDetailOverlay']").addClass("dat-open");
