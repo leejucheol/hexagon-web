@@ -12,22 +12,22 @@ import com.hexagon.hrproject.mapper.DepartmentAttendanceMapper;
 @Service
 public class DepartmentAttendanceService {
 
-    private final DepartmentAttendanceMapper mapper;
+    private final DepartmentAttendanceMapper departmentAttendanceMapper;
 
     public DepartmentAttendanceService(
-            DepartmentAttendanceMapper mapper) {
-        this.mapper = mapper;
+            DepartmentAttendanceMapper departmentAttendanceMapper) {
+        this.departmentAttendanceMapper = departmentAttendanceMapper;
     }
 
-    public Integer findMyDepartmentId(String loginId) {
-        return mapper.findDepartmentIdByLoginId(loginId);
+    public Integer getMyDepartmentId(String loginId) {
+        return departmentAttendanceMapper.selectDepartmentIdByLoginId(loginId);
     }
 
-    public List<DepartmentAttendanceRow> findByDepartment(
+    public List<DepartmentAttendanceRow> search(
             Integer departmentId,
             LocalDate workDate) {
 
-        return mapper.findDepartmentAttendance(
+        return departmentAttendanceMapper.search(
             departmentId,
             workDate
         );

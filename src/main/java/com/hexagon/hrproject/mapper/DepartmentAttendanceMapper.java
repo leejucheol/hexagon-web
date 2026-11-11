@@ -20,7 +20,7 @@ public interface DepartmentAttendanceMapper {
         "JOIN emp e ON ac.emp_id = e.emp_id",
         "WHERE ac.login_id = #{loginId}"
     })
-    Integer findDepartmentIdByLoginId(
+    Integer selectDepartmentIdByLoginId(
         @Param("loginId") String loginId
     );
 
@@ -86,7 +86,7 @@ public interface DepartmentAttendanceMapper {
         "ORDER BY e.department_id, e.emp_id",
         "</script>"
     })
-    List<DepartmentAttendanceRow> findDepartmentAttendance(
+    List<DepartmentAttendanceRow> search(
         @Param("departmentId") Integer departmentId,
         @Param("workDate") LocalDate workDate
     );

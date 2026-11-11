@@ -19,18 +19,18 @@ import com.hexagon.hrproject.service.DepartmentAttendanceService;
 
 @Controller
 @RequestMapping("/api/attendance")
-public class DepartmentAttendanceApiController {
+public class RestDepartmentAttendanceController {
 
-    private final DepartmentAttendanceService service;
+    private final DepartmentAttendanceService departmentAttendanceService;
 
-    public DepartmentAttendanceApiController(
-            DepartmentAttendanceService service) {
-        this.service = service;
+    public RestDepartmentAttendanceController(
+            DepartmentAttendanceService departmentAttendanceService) {
+        this.departmentAttendanceService = departmentAttendanceService;
     }
 
     @GetMapping("/department")
     @ResponseBody
-    public List<DepartmentAttendanceRow> getDepartmentAttendance(
+    public List<DepartmentAttendanceRow> search(
 
             @RequestParam(required = false)
             Integer departmentId,
@@ -70,7 +70,7 @@ public class DepartmentAttendanceApiController {
         if (!isAdmin) {
 
             Integer myDepartmentId =
-                service.findMyDepartmentId(
+                departmentAttendanceService.getMyDepartmentId(
                     authentication.getName()
                 );
 
@@ -91,7 +91,7 @@ public class DepartmentAttendanceApiController {
             allowedDepartmentId = myDepartmentId;
         }
 
-        return service.findByDepartment(
+        return departmentAttendanceService.search(
             allowedDepartmentId,
             workDate
         );
