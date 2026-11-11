@@ -32,19 +32,19 @@ public class RestEmpController {
       1. 사원 전체 조회
     ----------------------------------------*/
     @GetMapping("/api/employees")
-    public List<Emp> findAll() {
+    public List<Emp> getList() {
 
-        return empService.findAll();
+        return empService.getList();
     }
 
     /*----------------------------------------
       2. 사원 상세 조회
     ----------------------------------------*/
     @GetMapping("/api/employees/{empId}")
-    public ResponseEntity<Emp> findById(
+    public ResponseEntity<Emp> getDetail(
             @PathVariable int empId) {
 
-        Emp emp = empService.findById(empId);
+        Emp emp = empService.getDetail(empId);
 
         return ResponseEntity.ok(emp);
     }
@@ -56,7 +56,7 @@ public class RestEmpController {
     public ResponseEntity<String> regist(
             @RequestBody Account account) {
 
-        empService.register(account);
+        empService.regist(account);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -97,10 +97,10 @@ public class RestEmpController {
       6. 사원 목록 페이지 처리
     ----------------------------------------*/
     @GetMapping("/api/employees/page")
-    public ResponseEntity<Pager> getEmployeePage(
+    public ResponseEntity<Pager> getPageList(
             HttpServletRequest request) {
 
-        Pager pager = empService.getEmpPage(request);
+        Pager pager = empService.getPageList(request);
 
         return ResponseEntity.ok(pager);
     }

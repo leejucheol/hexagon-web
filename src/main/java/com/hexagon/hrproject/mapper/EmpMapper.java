@@ -8,9 +8,9 @@ import com.hexagon.hrproject.domain.Emp;
 
 public interface EmpMapper {
 
-	List<Emp> findAll();
+	List<Emp> selectAll();
 
-	Emp findById(@Param("empId") int empId);
+	Emp select(@Param("empId") int empId);
 
 	// 사원 신규 등록
 	int insert(Emp emp);
@@ -31,6 +31,6 @@ public interface EmpMapper {
 	int countAll();
 
 	// 페이지별 사원 목록 조회
-	List<Emp> findByPage(@Param("offset") int offset, @Param("pageSize") int pageSize);
+	List<Emp> selectPage(@Param("offset") int offset, @Param("pageSize") int pageSize);
 
 }

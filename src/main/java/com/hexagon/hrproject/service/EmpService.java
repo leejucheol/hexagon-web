@@ -31,16 +31,16 @@ public class EmpService {
 	// --------------------------------------
 	// 1. 사원 전체 조회
 	// --------------------------------------
-	public List<Emp> findAll() {
-		return empMapper.findAll();
+	public List<Emp> getList() {
+		return empMapper.selectAll();
 	}
 
 	// --------------------------------------
 	// 2. 사원 상세 조회
 	// --------------------------------------
-	public Emp findById(int empId) {
+	public Emp getDetail(int empId) {
 
-		Emp emp = empMapper.findById(empId);
+		Emp emp = empMapper.select(empId);
 
 		if (emp == null) {
 			throw new BusinessException(ErrorCode.EMPLOYEE_NOT_FOUND);
@@ -70,7 +70,7 @@ public class EmpService {
 	// 4. 사원 + 로그인 계정 등록
 	// --------------------------------------
 	@Transactional
-	public void register(Account account) {
+	public void regist(Account account) {
 
 		// 계정 입력 검사
 		if (account == null || account.getLoginId() == null || account.getLoginId().trim().isEmpty()) {
@@ -133,7 +133,7 @@ public class EmpService {
 		validateEmployee(emp);
 
 		// 수정 대상 조회
-		findById(emp.getEmpId());
+		getDetail(emp.getEmpId());
 
 		int result = empMapper.update(emp);
 
@@ -151,7 +151,7 @@ public class EmpService {
 	public int retire(int empId) {
 
 		// 퇴사 대상 조회
-		findById(empId);
+		getDetail(empId);
 
 		int result = empMapper.retire(empId);
 
@@ -190,7 +190,7 @@ public class EmpService {
 	// --------------------------------------
 	// 8. 사원 목록 페이지 처리
 	// --------------------------------------
-	public Pager getEmpPage(HttpServletRequest request) {
+	public Pager getPageList(HttpServletRequest request) {
 
 		Pager pager = new Pager();
 
@@ -203,7 +203,7 @@ public class EmpService {
 		pager.init(request);
 
 		// 현재 페이지 사원 조회
-		List<Emp> empList = empMapper.findByPage(pager.getOffset(), pager.getPageSize());
+		List<Emp> empList = empMapper.selectPage(pager.getOffset(), pager.getPageSize());
 
 		pager.setList(empList);
 

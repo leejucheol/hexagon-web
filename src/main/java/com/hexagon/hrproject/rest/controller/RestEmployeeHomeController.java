@@ -46,7 +46,7 @@ public class RestEmployeeHomeController {
         }
 
         // DB에서 사원 정보 조회
-        Emp emp = empService.findById(loginEmp.getEmpId());
+        Emp emp = empService.getDetail(loginEmp.getEmpId());
 
         return ResponseEntity.ok(emp);
     }

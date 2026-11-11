@@ -11,7 +11,7 @@
 
 		<!-- 부모님 정보 가져오기 1:1 대응되는 테이블간 조인 -->
 		<association column="emp_id" property="emp" javaType="Emp"
-			select="com.hexagon.hrproject.mapper.EmpMapper.findById" />
+			select="com.hexagon.hrproject.mapper.EmpMapper.select" />
 
 		<!-- 이 계정이 보유한 다수의 권한 가져오기, 이 계정이 여러 권한을 보유하므로, collection으로 가져오기 -->
 		<collection column="account_id" property="roles"
