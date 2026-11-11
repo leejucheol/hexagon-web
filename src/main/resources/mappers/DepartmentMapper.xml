@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hexagon.hrproject.mapper.DepartmentMapper">
+
+
+	<!-- MySQL이 ID를 자동 생성 -->
+	<insert id="insert" parameterType="Department"
+		useGeneratedKeys="true" keyProperty="departmentId">
+
+		INSERT INTO department (
+		department_name, is_active
+		)
+		VALUES (#{departmentName}, 1
+		)
+
+	</insert>
+
+	<select id="select" resultMap="joinMap">
+		SELECT
+		department_id,
+		department_code, department_name, is_active
+		FROM
+		department
+		WHERE
+		department_id = #{departmentId}
+	</select>
+
+	<resultMap type="Department" id="joinMap">
+		<id column="department_id" property="departmentId" />
+		<result column="department_code" property="departmentCode" />
+		<result column="department_name" property="departmentName" />
+		<result column="is_active" property="isActive" />
+		<result column="employee_count" property="employeeCount" />
+	</resultMap>
+
+	<select id="selectAll" resultMap="joinMap">
+		SELECT
+		d.department_id,
+		d.department_code,
+		d.department_name,
+		d.is_active,
+		COUNT(e.emp_id) AS employee_count
+
+		FROM department d
+
+		LEFT JOIN emp e
+		ON d.department_id = e.department_id
+
+		GROUP BY
+		d.department_id,
+		d.department_code,
+		d.department_name,
+		d.is_active
+
+		ORDER BY d.department_id DESC
+	</select>
+
+	<!-- 부서명 또는 부서 코드 검색 -->
+	<select id="search" resultMap="joinMap">
+		SELECT
+		d.department_id,
+		d.department_code,
+		d.department_name,
+		d.is_active,
+		COUNT(e.emp_id) AS
+		employee_count
+		FROM department d
+		LEFT JOIN emp e
+		ON d.department_id =
+		e.department_id
+		WHERE
+		d.department_name LIKE CONCAT('%',
+		#{departmentName}, '%')
+		OR d.department_code LIKE CONCAT('%',
+		#{departmentName}, '%')
+		GROUP BY
+		d.department_id,
+		d.department_code,
+		d.department_name,
+		d.is_active
+		ORDER BY d.department_id DESC
+	</select>
+
+	<!-- 생성된 ID로 부서 코드 저장 -->
+	<update id="updateCode" parameterType="Department">
+		UPDATE department
+		SET
+		department_code = #{departmentCode}
+		WHERE department_id =
+		#{departmentId}
+		AND department_code IS NULL
+	</update>
+
+	<!-- 부서명 수정 -->
+	<update id="updateName">
+		UPDATE department
+		SET department_name =
+		#{departmentName}
+		WHERE department_id = #{departmentId}
+		AND is_active =
+		1
+	</update>
+
+	<!-- 부서 비활성화 -->
+	<update id="deactivate">
+		UPDATE department
+		SET is_active = 0
+		WHERE department_id
+		= #{departmentId}
+		AND is_active = 1
+	</update>
+
+	<!-- 예외 처리 -->
+	<select id="countByName" resultType="int">
+		SELECT COUNT(*)
+		FROM department
+		WHERE department_name = #{departmentName}
+	</select>
+
+
+</mapper>

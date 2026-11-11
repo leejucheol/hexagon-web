@@ -1,0 +1,83 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ page import="org.springframework.web.util.HtmlUtils" %>
+
+<%
+    boolean hrmsHeaderIsAdmin = request.isUserInRole("HR_ADMIN");
+
+    String hrmsHeaderLoginId = request.getUserPrincipal() != null
+        ? request.getUserPrincipal().getName()
+        : "사용자";
+%>
+
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/css/sidebar.css?v=restore-2">
+
+<nav class="main-header navbar navbar-expand navbar-white navbar-light hrms-common-header"
+     aria-label="상단 사용자 메뉴">
+
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <button type="button"
+                    class="nav-link hrms-sidebar-toggle"
+                    data-widget="pushmenu"
+                    aria-controls="hrms-sidebar"
+                    aria-expanded="true"
+                    aria-label="사이드바 접기 또는 펼치기">
+
+                <span aria-hidden="true">&#9776;</span>
+            </button>
+        </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <div class="admin-profile-container">
+
+                <button type="button" class="profile-btn">
+                    <%= hrmsHeaderIsAdmin ? "관리자" : "사원" %>
+                </button>
+
+                <div class="profile-dropdown">
+
+                    <div class="dropdown-header">
+                        <%= HtmlUtils.htmlEscape(hrmsHeaderLoginId) %>
+                    </div>
+
+                    <a href="${pageContext.request.contextPath}/mypage"
+                       class="dropdown-item">
+                        내 정보
+                    </a>
+
+                    <a href="${pageContext.request.contextPath}/employee/myedit"
+                       class="dropdown-item">
+                        내 정보 수정
+                    </a>
+
+                    <% if (hrmsHeaderIsAdmin) { %>
+
+                    <a href="${pageContext.request.contextPath}/admin/accounts"
+                       class="dropdown-item highlight">
+                        권한 위임 관리
+                    </a>
+
+                    <% } %>
+
+                    <form action="${pageContext.request.contextPath}/logout"
+                          method="post"
+                          class="hrms-logout-form">
+
+                        <input type="hidden"
+                               name="${_csrf.parameterName}"
+                               value="${_csrf.token}">
+
+                        <button type="submit"
+                                class="dropdown-item danger hrms-logout-button">
+                            로그아웃
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </li>
+    </ul>
+</nav>

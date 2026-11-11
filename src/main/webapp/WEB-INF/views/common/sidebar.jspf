@@ -1,0 +1,200 @@
+<%@ page pageEncoding="UTF-8" %>
+
+<%
+    boolean hrmsSidebarIsAdmin = request.isUserInRole("HR_ADMIN");
+%>
+
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/css/sidebar.css?v=restore-2">
+
+<aside class="main-sidebar hrms-sidebar" id="hrms-sidebar">
+
+    <div class="sidebar-logo">
+        <span class="sidebar-logo-mark">田</span>
+        <%=hrmsSidebarIsAdmin ? "HRMS Admin" : "HRMS Employee"%>
+    </div>
+
+    <div class="sidebar-title">인사관리 시스템</div>
+
+    <nav class="sidebar-menu"
+         id="hrms-sidebar-menu"
+         data-context-path="${pageContext.request.contextPath}">
+
+        <% if (hrmsSidebarIsAdmin) { %>
+
+        <a href="${pageContext.request.contextPath}/dashboard"
+           class="menu-item" data-menu-path="/dashboard">
+            00 대시보드
+        </a>
+
+        <a href="${pageContext.request.contextPath}/departments"
+           class="menu-item" data-menu-path="/departments">
+            01 부서 관리
+        </a>
+
+        <a href="${pageContext.request.contextPath}/jobs"
+           class="menu-item" data-menu-path="/jobs">
+        <a 	href="${pageContext.request.contextPath}/jobs" 
+        	class="menu-item"
+        	data-menu-path="/jobs">
+            02 직급 관리
+        </a>
+
+        <a href="${pageContext.request.contextPath}/employees"
+           class="menu-item" data-menu-path="/employees">
+            03 사원 관리
+        </a>
+
+        <a href="${pageContext.request.contextPath}/attendance"
+           class="menu-item" data-menu-path="/attendance">
+            04 내 근태
+        </a>
+
+        <a href="${pageContext.request.contextPath}/leave"
+           class="menu-item" data-menu-path="/leave">
+            05 내 휴가
+        </a>
+
+        <a href="${pageContext.request.contextPath}/admin/accounts"
+           class="menu-item" data-menu-path="/admin/accounts">
+            06 권한 관리
+        </a>
+
+        <a href="${pageContext.request.contextPath}/mypage"
+           class="menu-item" data-menu-path="/mypage">
+            07 내 정보
+        </a>
+
+        <a href="${pageContext.request.contextPath}/admin/roles/permissions"
+           class="menu-item"
+           data-menu-path="/admin/roles/permissions">
+            08 역할별 권한 설정
+        </a>
+
+        <% } else { %>
+
+        <a href="${pageContext.request.contextPath}/employee/home"
+           class="menu-item" data-menu-path="/employee/home">
+            00 사원 홈
+        </a>
+
+        <a href="${pageContext.request.contextPath}/mypage"
+           class="menu-item" data-menu-path="/mypage">
+            01 내 정보
+        </a>
+
+        <a href="${pageContext.request.contextPath}/employee/myedit"
+           class="menu-item" data-menu-path="/employee/myedit">
+            02 내 정보 수정
+        </a>
+
+        <a href="${pageContext.request.contextPath}/attendance"
+           class="menu-item" data-menu-path="/attendance">
+            03 내 근태
+        </a>
+
+        <a href="${pageContext.request.contextPath}/leave"
+           class="menu-item" data-menu-path="/leave">
+            04 내 휴가
+        </a>
+
+        <% } %>
+
+    </nav>
+</aside>
+
+<script>
+(function () {
+    const menu = document.getElementById("hrms-sidebar-menu");
+    if (!menu) return;
+
+    const contextPath =
+        menu.getAttribute("data-context-path") || "";
+
+    let currentPath = window.location.pathname;
+
+    if (
+        contextPath &&
+        (
+            currentPath === contextPath ||
+            currentPath.indexOf(contextPath + "/") === 0
+        )
+    ) {
+        currentPath = currentPath.substring(contextPath.length);
+    }
+
+    currentPath = currentPath.replace(/\/+$/, "") || "/";
+
+    menu.querySelectorAll("[data-menu-path]").forEach(function (link) {
+        const path = link.getAttribute("data-menu-path");
+
+        const selected =
+            currentPath === path ||
+            currentPath.indexOf(path + "/") === 0 ||
+            (currentPath === "/" && path === "/dashboard");
+
+        link.classList.toggle("active", selected);
+
+        if (selected) {
+            link.setAttribute("aria-current", "page");
+        } else {
+            link.removeAttribute("aria-current");
+        }
+    });
+
+    if (
+        document.documentElement.hasAttribute(
+            "data-hrms-sidebar-ready"
+        )
+    ) {
+        return;
+    }
+
+    document.documentElement.setAttribute(
+        "data-hrms-sidebar-ready",
+        "true"
+    );
+
+    function updateToggleState() {
+        const expanded =
+            !document.body.classList.contains("sidebar-collapse");
+
+        document.querySelectorAll(
+            '[data-widget="pushmenu"]'
+        ).forEach(function (button) {
+            button.setAttribute("aria-expanded", String(expanded));
+            button.setAttribute("aria-controls", "hrms-sidebar");
+        });
+    }
+
+    document.addEventListener("click", function (event) {
+        if (!(event.target instanceof Element)) return;
+
+        const button = event.target.closest(
+            '[data-widget="pushmenu"]'
+        );
+
+        if (!button) return;
+
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        document.body.classList.remove(
+            "sidebar-open",
+            "sidebar-closed"
+        );
+
+        document.body.classList.toggle("sidebar-collapse");
+        updateToggleState();
+    }, true);
+
+    if (document.readyState === "loading") {
+        document.addEventListener(
+            "DOMContentLoaded",
+            updateToggleState
+        );
+    } else {
+        updateToggleState();
+    }
+}());
+</script>

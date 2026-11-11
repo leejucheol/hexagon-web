@@ -1,0 +1,316 @@
+
+@charset "UTF-8";
+
+/* =========================
+   1. 부서관리 기본 설정
+   공통 헤더 / 사이드바 제외
+========================= */
+
+.content-wrapper {
+    min-width: 0;
+    min-height: 100vh;
+    background: #ffffff;
+    color: #172033;
+    font-family: "Malgun Gothic", Arial, sans-serif;
+    font-size: 13px;
+}
+
+/* 부서관리 본문 요소 */
+.content-wrapper,
+.content-wrapper *,
+.popup-body,
+.popup-body * {
+    box-sizing: border-box;
+}
+
+.content-wrapper button,
+.content-wrapper input,
+.content-wrapper select,
+.popup-body button,
+.popup-body input {
+    font: inherit;
+}
+
+.content-wrapper button,
+.popup-body button {
+    cursor: pointer;
+}
+
+/* =========================
+   2. 부서관리 제목 및 본문
+========================= */
+
+/* 제목 영역 */
+.content-wrapper .content-header {
+    padding: 32px 28px 20px;
+}
+
+.content-wrapper .page-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    color: #14213b;
+}
+
+.content-wrapper .page-path {
+    margin: 0;
+    font-size: 13px;
+    color: #8293b1;
+}
+
+/* 본문 좌우 여백 */
+.content-wrapper .content {
+    padding: 0 28px 40px;
+}
+
+/* 내부 콘텐츠 너비 */
+.content-wrapper .container-fluid {
+    width: 100%;
+    min-width: 0;
+}
+
+/* =========================
+   3. 부서 통계 카드
+========================= */
+
+.summary-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 50px;
+}
+
+.summary-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 24px;
+    min-height: 115px;
+}
+
+.summary-card p {
+    font-size: 13px;
+    margin: 0 0 20px;
+}
+
+.summary-card h3 {
+    font-size: 22px;
+    margin: 0;
+}
+
+/* =========================
+   4. 검색 및 등록 버튼
+========================= */
+
+.table-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 15px;
+}
+
+.table-top h3 {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.table-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.table-actions input {
+    width: 260px;
+    padding: 12px 15px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #ffffff;
+}
+
+.primary-btn {
+    padding: 12px 22px;
+    background: #10192e;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    white-space: nowrap;
+}
+
+.primary-btn:hover {
+    background: #263754;
+    color: #ffffff;
+}
+
+/* =========================
+   5. 부서 목록 테이블
+========================= */
+
+.department-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 5px;
+}
+
+.department-table th {
+    background: #edf2f8;
+    text-align: left;
+    padding: 18px 22px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.department-table td {
+    background: #ffffff;
+    border-top: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 18px 22px;
+    font-size: 13px;
+}
+
+.department-table td:first-child {
+    border-left: 1px solid #e2e8f0;
+    border-radius: 8px 0 0 8px;
+}
+
+.department-table td:last-child {
+    border-right: 1px solid #e2e8f0;
+    border-radius: 0 8px 8px 0;
+}
+
+.department-table td:last-child button {
+    margin-right: 8px;
+    padding: 7px 12px;
+    border: 1px solid #dce3ec;
+    border-radius: 6px;
+    background: #ffffff;
+}
+
+.department-table td:last-child button:hover:not(:disabled) {
+    background: #edf2f8;
+}
+
+.department-table td:last-child button:disabled {
+    opacity: 0.45;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+/* =========================
+   6. 등록·수정 팝업
+========================= */
+
+.popup-body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f4f6f9;
+    font-family: "Malgun Gothic", Arial, sans-serif;
+    font-size: 13px;
+    color: #172033;
+}
+
+.popup-card {
+    width: 100%;
+    max-width: 500px;
+    padding: 30px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.popup-card h2 {
+    font-size: 20px;
+    margin: 0 0 12px;
+}
+
+.popup-description {
+    color: #667085;
+    font-size: 13px;
+    margin-bottom: 28px;
+}
+
+.popup-card .form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.popup-card .form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #dce3ec;
+    border-radius: 8px;
+}
+
+.popup-card .form-group + .form-group {
+    margin-top: 20px;
+}
+
+.popup-card input[readonly] {
+    background: #f4f6f9;
+    color: #667085;
+    cursor: not-allowed;
+}
+
+.popup-card .button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.popup-card .button-group button:not(.primary-btn) {
+    padding: 12px 22px;
+    background: #ffffff;
+    border: 1px solid #dce3ec;
+    border-radius: 8px;
+}
+
+/* =========================
+   7. 작은 화면
+========================= */
+
+@media (max-width: 800px) {
+
+    .content-wrapper .content-header {
+        padding: 20px;
+    }
+
+    .content-wrapper .content {
+        padding: 0 20px 30px;
+    }
+
+    .summary-row {
+        grid-template-columns: 1fr;
+        margin-bottom: 25px;
+    }
+
+    .table-top {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .table-actions {
+        flex-wrap: wrap;
+    }
+
+    .table-actions input {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .department-table {
+        font-size: 12px;
+    }
+
+    .department-table th,
+    .department-table td {
+        padding: 12px;
+    }
+}
