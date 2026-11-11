@@ -527,7 +527,7 @@ body {
 </style>
 
 <script type="text/javascript">
-        // 실제 프로젝트의 Context Path: /HR_PROJECT 또는 빈 문자열
+        // 실제 프로젝트의 Context Path: /hexagon-web 또는 빈 문자열
         const contextPath = "${pageContext.request.contextPath}";
         let attendanceList = [];
         let listLoaded = false;
