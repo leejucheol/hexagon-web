@@ -36,7 +36,7 @@ public class SalaryController {
 
     // 1. 급여 목록 조회 및 검색
     @GetMapping("/list")
-    public String list(
+    public String salaryList(
             @RequestParam(value = "salaryYearMonth", required = false)
             String salaryYearMonth,
 
@@ -61,7 +61,7 @@ public class SalaryController {
         try {
             model.addAttribute(
                 "salaries",
-                salaryService.getSalaryList(month, keyword)
+                salaryService.search(month, keyword)
             );
 
         } catch (SalaryBusinessException e) {
@@ -82,13 +82,13 @@ public class SalaryController {
 
     // 2. 급여 상세 조회
     @GetMapping("/detail/{salaryId}")
-    public String detail(
+    public String salaryDetail(
             @PathVariable("salaryId") Long salaryId,
             Model model) {
 
         model.addAttribute(
             "salary",
-            salaryService.getSalaryDetail(salaryId)
+            salaryService.getDetail(salaryId)
         );
 
         return "salary/detail";
@@ -96,7 +96,7 @@ public class SalaryController {
 
     // 3. 급여 등록 화면
     @GetMapping("/create")
-    public String createForm(Model model) {
+    public String salaryRegister(Model model) {
 
         SalaryCreateRequest request =
                 new SalaryCreateRequest();
@@ -114,7 +114,7 @@ public class SalaryController {
 
     // 4. 급여 등록 처리
     @PostMapping("/create")
-    public String create(
+    public String regist(
             @Valid @ModelAttribute("salaryCreateRequest")
             SalaryCreateRequest request,
             BindingResult bindingResult,
@@ -132,7 +132,7 @@ public class SalaryController {
 
         try {
             Long salaryId =
-                    salaryService.createSalary(request);
+                    salaryService.regist(request);
 
             return "redirect:/salary/detail/" + salaryId + "?created=true";
 

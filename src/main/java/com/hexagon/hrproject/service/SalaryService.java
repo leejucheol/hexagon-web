@@ -28,12 +28,12 @@ public class SalaryService {
     }
 
     // 2. 전체 급여 목록 조회
-    public List<Salary> getSalaryList() {
+    public List<Salary> getList() {
         return salaryMapper.selectAll();
     }
 
     // 3. 급여 검색
-    public List<Salary> getSalaryList(
+    public List<Salary> search(
             String salaryYearMonth,
             String employeeKeyword) {
 
@@ -78,18 +78,18 @@ public class SalaryService {
             }
         }
 
-        return salaryMapper.selectByFilters(
+        return salaryMapper.search(
                 month, keyword, employeeId);
     }
 
     // 4. 급여 상세 조회
-    public Salary getSalaryDetail(Long salaryId) {
+    public Salary getDetail(Long salaryId) {
 
         if (salaryId == null || salaryId <= 0) {
             throw new SalaryNotFoundException();
         }
 
-        Salary salary = salaryMapper.selectById(salaryId);
+        Salary salary = salaryMapper.select(salaryId);
 
         if (salary == null) {
             throw new SalaryNotFoundException();
@@ -191,7 +191,7 @@ public class SalaryService {
 
     // 6. 급여 등록
     @Transactional
-    public Long createSalary(SalaryCreateRequest request) {
+    public Long regist(SalaryCreateRequest request) {
 
         // 입력값 검사 및 실수령액 계산
         Salary salary = prepareSalary(request);
@@ -240,7 +240,7 @@ public class SalaryService {
  // =========================================
  // 7. 본인 급여 목록 조회
  // =========================================
- public List<Salary> getMySalaryList(Long empId, String year) {
+ public List<Salary> getMyList(Long empId, String year) {
 
      if (empId == null || empId <= 0) {
          throw new SalaryBusinessException(
@@ -257,14 +257,14 @@ public class SalaryService {
                  "조회 연도는 yyyy 형식으로 입력하세요.");
      }
 
-     return salaryMapper.selectMySalaries(empId, searchYear);
+     return salaryMapper.selectMyList(empId, searchYear);
  }
 
 
  // =========================================
  // 8. 본인 급여 상세 조회
  // =========================================
- public Salary getMySalaryDetail(Long empId, Long salaryId) {
+ public Salary getMyDetail(Long empId, Long salaryId) {
 
      if (empId == null || empId <= 0
              || salaryId == null || salaryId <= 0) {
@@ -272,7 +272,7 @@ public class SalaryService {
          throw new SalaryNotFoundException();
      }
 
-     Salary salary = salaryMapper.selectMySalaryDetail(
+     Salary salary = salaryMapper.selectMyDetail(
              empId, salaryId);
 
      if (salary == null) {

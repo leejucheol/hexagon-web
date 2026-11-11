@@ -62,7 +62,7 @@ public class MySalaryController {
 
 	// 2. 내 급여 목록
 	@GetMapping
-	public String myList(@RequestParam(value = "year", required = false) String year, Model model) {
+	public String mySalaryList(@RequestParam(value = "year", required = false) String year, Model model) {
 
 		Long empId = getLoginEmpId();
 
@@ -70,17 +70,17 @@ public class MySalaryController {
 
 		String searchYear = (year == null || year.trim().isEmpty()) ? String.valueOf(currentYear) : year.trim();
 
-		List<Salary> salaries = salaryService.getMySalaryList(empId, searchYear);
+		List<Salary> salaryList = salaryService.getMyList(empId, searchYear);
 
-		model.addAttribute("salaries", salaries);
+		model.addAttribute("salaries", salaryList);
 		model.addAttribute("searchYear", searchYear);
 		model.addAttribute("empId", empId);
 
 		model.addAttribute("years", IntStream.rangeClosed(currentYear - 4, currentYear).boxed()
 				.sorted((a, b) -> b.compareTo(a)).collect(Collectors.toList()));
 
-		if (!salaries.isEmpty()) {
-			model.addAttribute("latestSalary", salaries.get(0));
+		if (!salaryList.isEmpty()) {
+			model.addAttribute("latestSalary", salaryList.get(0));
 		}
 
 		return "salary/myList";
@@ -88,11 +88,11 @@ public class MySalaryController {
 
 	// 3. 내 급여 상세
 	@GetMapping("/detail/{salaryId}")
-	public String myDetail(@PathVariable("salaryId") Long salaryId, Model model) {
+	public String mySalaryDetail(@PathVariable("salaryId") Long salaryId, Model model) {
 
 		Long empId = getLoginEmpId();
 
-		Salary salary = salaryService.getMySalaryDetail(empId, salaryId);
+		Salary salary = salaryService.getMyDetail(empId, salaryId);
 
 		model.addAttribute("salary", salary);
 

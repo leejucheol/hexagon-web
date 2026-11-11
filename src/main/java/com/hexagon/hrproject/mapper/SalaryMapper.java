@@ -15,13 +15,13 @@ public interface SalaryMapper {
     List<Salary> selectAll();
 
     // 지급 연월과 사원 이름 일부 또는 번호로 검색
-    List<Salary> selectByFilters(
+    List<Salary> search(
             @Param("salaryYearMonth") String salaryYearMonth,
             @Param("employeeKeyword") String employeeKeyword,
             @Param("employeeId") Long employeeId);
 
     // 급여 번호로 상세 조회
-    Salary selectById(@Param("salaryId") Long salaryId);
+    Salary select(@Param("salaryId") Long salaryId);
 
     // 급여 등록용 사원 이름과 번호 조회
     List<SalaryEmployeeOption> selectEmployeeOptions();
@@ -39,13 +39,13 @@ public interface SalaryMapper {
     
 
     // 로그인한 사원의 급여 목록 조회
-    List<Salary> selectMySalaries(
+    List<Salary> selectMyList(
             @Param("empId") Long empId,
             @Param("year") String year);
 
 
     // 본인 급여 상세 조회
-    Salary selectMySalaryDetail(
+    Salary selectMyDetail(
             @Param("empId") Long empId,
             @Param("salaryId") Long salaryId);
 
