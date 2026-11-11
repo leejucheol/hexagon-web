@@ -34,9 +34,6 @@
 
         <a href="${pageContext.request.contextPath}/jobs"
            class="menu-item" data-menu-path="/jobs">
-        <a 	href="${pageContext.request.contextPath}/jobs" 
-        	class="menu-item"
-        	data-menu-path="/jobs">
             02 직급 관리
         </a>
 
