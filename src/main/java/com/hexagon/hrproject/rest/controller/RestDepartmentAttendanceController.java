@@ -48,9 +48,9 @@ public class RestDepartmentAttendanceController {
             );
         }
 
-        // 실제 관리자 역할 코드와 일치하는지 확인 필요
+        // 인사 관리자 역할 보유 여부 확인
         boolean isAdmin = hasAuthority(
-            authentication, "ROLE_ADMIN"
+            authentication, "ROLE_HR_ADMIN"
         );
 
         boolean canReadTeam = hasAuthority(
