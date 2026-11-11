@@ -19,11 +19,11 @@ import com.hexagon.hrproject.mapper.RolePermissionMapper;
 @Service
 public class RolePermissionService {
 
-    private final RolePermissionMapper mapper;
+    private final RolePermissionMapper rolePermissionMapper;
 
     @Autowired
-    public RolePermissionService(RolePermissionMapper mapper) {
-        this.mapper = mapper;
+    public RolePermissionService(RolePermissionMapper rolePermissionMapper) {
+        this.rolePermissionMapper = rolePermissionMapper;
     }
 
     @Transactional(readOnly = true)
@@ -32,7 +32,7 @@ public class RolePermissionService {
     )
     public Map<String, Object> page(Long requestedRoleId) {
 
-        List<Map<String, Object>> roles = mapper.roles();
+        List<Map<String, Object>> roles = rolePermissionMapper.roles();
         Long roleId = null;
 
         for (Map<String, Object> role : roles) {
@@ -52,7 +52,7 @@ public class RolePermissionService {
         Map<String, Object> result = new HashMap<>();
 
         result.put("roles", roles);
-        result.put("permissions", mapper.permissions());
+        result.put("permissions", rolePermissionMapper.permissions());
         result.put("selectedRoleId", roleId);
 
         result.put(
@@ -60,7 +60,7 @@ public class RolePermissionService {
             roleId == null
                 ? Collections.<Long>emptySet()
                 : new HashSet<Long>(
-                    mapper.selectedPermissions(roleId)
+                    rolePermissionMapper.selectedPermissions(roleId)
                 )
         );
 
@@ -75,7 +75,7 @@ public class RolePermissionService {
             long roleId,
             List<Long> permissionIds) {
 
-        Map<String, Object> role = mapper.lockRole(roleId);
+        Map<String, Object> role = rolePermissionMapper.lockRole(roleId);
 
         if (role == null) {
             throw new IllegalArgumentException(
@@ -92,7 +92,7 @@ public class RolePermissionService {
         Set<Long> valid = new HashSet<>();
         Set<String> selectedCodes = new HashSet<>();
 
-        for (Map<String, Object> permission : mapper.permissions()) {
+        for (Map<String, Object> permission : rolePermissionMapper.permissions()) {
             Long id = ((Number) permission.get(
                 "permissionId"
             )).longValue();
@@ -128,10 +128,10 @@ public class RolePermissionService {
             );
         }
 
-        mapper.deletePermissions(roleId);
+        rolePermissionMapper.deletePermissions(roleId);
 
         for (Long permissionId : selected) {
-            mapper.insertPermission(roleId, permissionId);
+            rolePermissionMapper.insertPermission(roleId, permissionId);
         }
     }
 }

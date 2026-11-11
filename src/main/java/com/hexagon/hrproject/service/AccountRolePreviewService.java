@@ -12,17 +12,17 @@ import com.hexagon.hrproject.mapper.AccountRolePreviewMapper;
 @Service
 public class AccountRolePreviewService {
 
-    private final AccountRolePreviewMapper previewMapper;
+    private final AccountRolePreviewMapper accountRolePreviewMapper;
 
     @Autowired
     public AccountRolePreviewService(
-            AccountRolePreviewMapper previewMapper) {
+            AccountRolePreviewMapper accountRolePreviewMapper) {
 
-        this.previewMapper = previewMapper;
+        this.accountRolePreviewMapper = accountRolePreviewMapper;
     }
 
     @Transactional(readOnly = true)
     public List<Map<String, Object>> getRolePermissions() {
-        return previewMapper.selectRolePermissions();
+        return accountRolePreviewMapper.selectRolePermissions();
     }
 }

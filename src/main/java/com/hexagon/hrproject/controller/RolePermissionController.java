@@ -21,11 +21,11 @@ import com.hexagon.hrproject.service.RolePermissionService;
 )
 public class RolePermissionController {
 
-    private final RolePermissionService service;
+    private final RolePermissionService rolePermissionService;
 
     @Autowired
-    public RolePermissionController(RolePermissionService service) {
-        this.service = service;
+    public RolePermissionController(RolePermissionService rolePermissionService) {
+        this.rolePermissionService = rolePermissionService;
     }
 
     @GetMapping
@@ -34,7 +34,7 @@ public class RolePermissionController {
                 Long roleId,
             Model model) {
 
-        model.addAllAttributes(service.page(roleId));
+        model.addAllAttributes(rolePermissionService.page(roleId));
 
         return "admin/role_permission";
     }
@@ -47,7 +47,7 @@ public class RolePermissionController {
             RedirectAttributes redirect) {
 
         try {
-            service.savePermissions(roleId, permissionIds);
+            rolePermissionService.savePermissions(roleId, permissionIds);
 
             redirect.addFlashAttribute(
                 "rolePermissionMessage",
