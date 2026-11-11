@@ -7,8 +7,8 @@ import org.apache.ibatis.annotations.Select;
 public interface DashboardMapper {
     
     @Select("SELECT COUNT(*) FROM emp")
-    int countAllEmp();
+    int countAll();
 
     @Select("SELECT COUNT(*) FROM emp WHERE status = #{status}")
-    int countEmpByStatus(String status);
+    int countByStatus(String status);
 }

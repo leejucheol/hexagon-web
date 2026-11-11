@@ -16,10 +16,10 @@ public class DashboardService {
     public Map<String, Object> getDashboardStats() {
         Map<String, Object> stats = new HashMap<>();
 
-        int totalEmp = dashboardMapper.countAllEmp();
-        int activeEmp = dashboardMapper.countEmpByStatus("ACTIVE");
-        int leaveEmp = dashboardMapper.countEmpByStatus("LEAVE");
-        int resignEmp = dashboardMapper.countEmpByStatus("RESIGN");
+        int totalEmp = dashboardMapper.countAll();
+        int activeEmp = dashboardMapper.countByStatus("ACTIVE");
+        int leaveEmp = dashboardMapper.countByStatus("LEAVE");
+        int resignEmp = dashboardMapper.countByStatus("RESIGN");
 
         stats.put("totalEmp", totalEmp);
         stats.put("activeEmp", activeEmp);
