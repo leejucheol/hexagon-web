@@ -1,0 +1,4 @@
+# Google Cloud Console에서 발급한 OAuth 클라이언트 정보
+# 이 파일을 복사해 같은 폴더에 google.local.properties를 만들고 값을 채운다.
+google.client-id=YOUR_GOOGLE_CLIENT_ID
+google.client-secret=YOUR_GOOGLE_CLIENT_SECRET
