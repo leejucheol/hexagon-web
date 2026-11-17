@@ -843,7 +843,7 @@
 	display: grid;
 	grid-template-columns: repeat(3, minmax(0, 1fr));
 	grid-template-areas: "id name status" "email phone notice"
-		"password hiredate notice" "department job notice";
+		"loginid hiredate notice" "department job notice";
 	column-gap: 44px;
 	row-gap: 20px;
 }
@@ -872,8 +872,8 @@
 	grid-area: notice;
 }
 
-.field-password {
-	grid-area: password;
+.field-login-id {
+	grid-area: loginid;
 }
 
 .field-hiredate {
@@ -1011,7 +1011,7 @@
 	.employee-register-grid {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 		grid-template-areas: "id name" "status email" "phone hiredate"
-			"department job" "password notice";
+			"department job" "loginid notice";
 		gap: 22px;
 	}
 }
@@ -1031,7 +1031,7 @@
 	.employee-register-grid {
 		grid-template-columns: 1fr;
 		grid-template-areas: "id" "name" "status" "email" "phone" "hiredate"
-			"department" "job" "password" "notice";
+			"department" "job" "loginid" "notice";
 		gap: 18px;
 	}
 	.register-actions {
