@@ -14,6 +14,7 @@ public class Account {
    private Emp emp;
    private String loginId;
    private String password;
+   private String googleSub;
    private int enabled;
    private LocalDateTime createdAt;
    private LocalDateTime lastLoginAt;

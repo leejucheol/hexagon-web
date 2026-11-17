@@ -6,6 +6,7 @@
 		<id column="account_id" property="accountId" />
 		<result column="login_id" property="loginId" />
 		<result column="password" property="password" />
+		<result column="google_sub" property="googleSub" />
 		<result column="created_at" property="createdAt" />
 		<result column="last_login_at" property="lastLoginAt" />
 
@@ -52,12 +53,40 @@
 	<!-- login_id 가 일치하는 회원 가져오기 -->
 	<select id="selectByLoginId" parameterType="String"
 		resultMap="joinMap">
-		select account_id, emp_id, login_id, password, enabled,
+		select account_id, emp_id, login_id, password, google_sub, enabled,
 		created_at,
 		last_login_at
 		from account
 		where login_id=#{loginId}
 	</select>
+
+	<!-- google_sub 가 일치하는 회원 가져오기 -->
+	<select id="selectByGoogleSub" parameterType="String"
+		resultMap="joinMap">
+		select account_id, emp_id, login_id, password, google_sub, enabled,
+		created_at,
+		last_login_at
+		from account
+		where google_sub=#{googleSub}
+	</select>
+
+	<!-- 사원 이메일이 일치하는 회원 목록 가져오기 -->
+	<select id="selectByEmpEmail" parameterType="String"
+		resultMap="joinMap">
+		select a.account_id, a.emp_id, a.login_id, a.password, a.google_sub,
+		a.enabled, a.created_at, a.last_login_at
+		from account a
+		join emp e on e.emp_id = a.emp_id
+		where e.email=#{email}
+	</select>
+
+	<!-- 계정에 구글 sub 저장 -->
+	<update id="updateGoogleSub">
+		UPDATE account
+		SET google_sub = #{googleSub}
+		WHERE
+		account_id = #{accountId}
+	</update>
 
 	<!-- (사원용)로그인한 계정의 비밀번호 변경 -->
 	<update id="updatePassword">
@@ -82,7 +111,7 @@
 	<!-- 2. 특정 계정 상세 정보 조회 (필요에 따라 권한 목록도 JOIN 또는 별도 조회) -->
 	<select id="select" resultMap="joinMap">
 		SELECT account_id, emp_id,
-		login_id, password, enabled, created_at, last_login_at
+		login_id, password, google_sub, enabled, created_at, last_login_at
 		FROM account
 		WHERE account_id = #{accountId}
 	</select>
@@ -108,6 +137,7 @@
 		a.account_id,
 		a.emp_id,
 		a.login_id,
+		a.google_sub,
 		a.enabled,
 		a.created_at,
 		a.last_login_at
