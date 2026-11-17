@@ -78,12 +78,13 @@
 		where e.email=#{email}
 	</select>
 
-	<!-- 계정에 구글 sub 저장 -->
+	<!-- 아직 연결되지 않은 계정에만 구글 sub 저장 -->
 	<update id="updateGoogleSub">
 		UPDATE account
 		SET google_sub = #{googleSub}
 		WHERE
 		account_id = #{accountId}
+		AND google_sub IS NULL
 	</update>
 
 	<!-- ========================================== -->
