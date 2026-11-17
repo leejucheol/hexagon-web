@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.oidc.OidcIdToken;
+import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 
 import com.hexagon.hrproject.domain.Account;
 import com.hexagon.hrproject.domain.HrRole;
@@ -19,12 +23,20 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Getter
-public class AccountDetails implements UserDetails {
+public class AccountDetails implements UserDetails, OidcUser {
 
 	private Account account;
 
+	// 구글 로그인으로 받은 사용자 정보
+	private OidcUser oidcUser;
+
 	// 보유 권한 모아놓을 컬렉션
 	private List<GrantedAuthority> authorities;
+
+	public AccountDetails(Account account, OidcUser oidcUser) {
+		this(account);
+		this.oidcUser = oidcUser;
+	}
 
 	public AccountDetails(Account account) {
 		this.account = account;
@@ -83,6 +95,32 @@ public class AccountDetails implements UserDetails {
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
 		return account.getEnabled()==1;
+	}
+
+	// Authentication.getName()이 구글 sub가 아니라 로그인 아이디가 되도록 한다
+	@Override
+	public String getName() {
+		return account.getLoginId();
+	}
+
+	@Override
+	public Map<String, Object> getClaims() {
+		return oidcUser.getClaims();
+	}
+
+	@Override
+	public OidcUserInfo getUserInfo() {
+		return oidcUser.getUserInfo();
+	}
+
+	@Override
+	public OidcIdToken getIdToken() {
+		return oidcUser.getIdToken();
+	}
+
+	@Override
+	public Map<String, Object> getAttributes() {
+		return oidcUser.getAttributes();
 	}
 
 }
