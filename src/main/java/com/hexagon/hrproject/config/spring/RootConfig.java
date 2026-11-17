@@ -23,7 +23,10 @@ import com.zaxxer.hikari.HikariDataSource;
 // @value 조사하기
 @Configuration
 @PropertySource(
-	    value = "classpath:config/db-local.properties",
+	    value = {
+	        "classpath:config/db-local.properties",
+	        "classpath:config/google.local.properties"
+	    },
 	    encoding = "UTF-8"
 	)
 
