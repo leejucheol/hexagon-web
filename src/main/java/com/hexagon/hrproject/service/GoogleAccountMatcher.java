@@ -42,7 +42,7 @@ public final class GoogleAccountMatcher {
 		return new Result(account, saveSub, null);
 	}
 
-	static Result error(GoogleLoginError error) {
+	private static Result error(GoogleLoginError error) {
 		return new Result(null, false, error);
 	}
 

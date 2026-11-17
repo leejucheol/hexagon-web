@@ -102,7 +102,7 @@ public class AccountService {
     // 7. 구글 로그인 계정 연결
     // ----------------------------------------
     @Transactional
-    public GoogleAccountMatcher.Result linkGoogleAccount(
+    public Account linkGoogleAccount(
             String sub,
             String email,
             boolean emailVerified) {
@@ -116,19 +116,24 @@ public class AccountService {
         GoogleAccountMatcher.Result result =
             GoogleAccountMatcher.match(bySub, byEmail, emailVerified);
 
-        if (result.isSaveSub()) {
-            Account account = result.getAccount();
-
-            // 판정 뒤 다른 요청이 먼저 연결했으면 갱신되지 않는다
-            if (accountMapper.updateGoogleSub(account.getAccountId(), sub) != 1) {
-                return GoogleAccountMatcher.error(
-                    GoogleLoginError.ACCOUNT_NOT_LINKED
-                );
-            }
-
-            account.setGoogleSub(sub);
+        if (result.getError() != null) {
+            throw new GoogleLoginException(result.getError());
         }
 
-        return result;
+        Account account = result.getAccount();
+
+        if (!result.isSaveSub()) {
+            return account;
+        }
+
+        // 판정 뒤 다른 요청이 먼저 연결했으면 갱신되지 않는다
+        if (accountMapper.updateGoogleSub(account.getAccountId(), sub) != 1) {
+            throw new GoogleLoginException(
+                GoogleLoginError.ACCOUNT_NOT_LINKED
+            );
+        }
+
+        account.setGoogleSub(sub);
+        return account;
     }
 }

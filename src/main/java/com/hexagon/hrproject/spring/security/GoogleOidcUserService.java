@@ -8,8 +8,9 @@ import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Component;
 
+import com.hexagon.hrproject.domain.Account;
 import com.hexagon.hrproject.service.AccountService;
-import com.hexagon.hrproject.service.GoogleAccountMatcher;
+import com.hexagon.hrproject.service.GoogleLoginException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,15 +27,16 @@ public class GoogleOidcUserService implements OAuth2UserService<OidcUserRequest,
 	public OidcUser loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
 		OidcUser oidcUser = delegate.loadUser(userRequest);
 
-		GoogleAccountMatcher.Result result = accountService.linkGoogleAccount(
-				oidcUser.getSubject(),
-				oidcUser.getEmail(),
-				Boolean.TRUE.equals(oidcUser.getEmailVerified()));
+		try {
+			Account account = accountService.linkGoogleAccount(
+					oidcUser.getSubject(),
+					oidcUser.getEmail(),
+					Boolean.TRUE.equals(oidcUser.getEmailVerified()));
 
-		if (result.getError() != null) {
-			throw new OAuth2AuthenticationException(new OAuth2Error(result.getError().getCode()));
+			return new AccountDetails(account, oidcUser);
+
+		} catch (GoogleLoginException e) {
+			throw new OAuth2AuthenticationException(new OAuth2Error(e.getError().getCode()));
 		}
-
-		return new AccountDetails(result.getAccount(), oidcUser);
 	}
 }
