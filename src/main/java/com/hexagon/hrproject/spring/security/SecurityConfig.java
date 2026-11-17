@@ -24,6 +24,7 @@ public class SecurityConfig {
 
     private final LoginSuccessHandler loginSuccessHandler;
     private final LoginFailureHandler loginFailureHandler;
+    private final GoogleOidcUserService googleOidcUserService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http)
@@ -99,11 +100,11 @@ public class SecurityConfig {
                 )
             )
 
-            .formLogin(form -> form
+            .oauth2Login(oauth2 -> oauth2
                 .loginPage("/login")
-                .loginProcessingUrl("/login")
-                .usernameParameter("accountId")
-                .passwordParameter("pwd")
+                .userInfoEndpoint(userInfo -> userInfo
+                    .oidcUserService(googleOidcUserService)
+                )
                 .successHandler(loginSuccessHandler)
                 .failureHandler(loginFailureHandler)
                 .permitAll()

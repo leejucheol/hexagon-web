@@ -5,6 +5,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
@@ -14,14 +15,27 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class LoginFailureHandler implements AuthenticationFailureHandler {
 
+    // GoogleOidcUserService가 정한 오류 코드는 그대로, 그 밖의 실패는 login_failed로 돌려보낸다
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException exception) throws IOException, ServletException {
-        
-        // AJAX 요청(fetch)에 맞춰 JSON 응답 전송 (상태코드 200 또는 401)
-        response.setContentType("application/json;charset=UTF-8");
-        response.setStatus(HttpServletResponse.SC_OK);
-        log.debug("로그인 실패");
-        response.getWriter().write("{\"success\":false, \"message\":\"아이디 또는 비밀번호가 일치하지 않습니다.\"}");
+
+        String errorCode = "login_failed";
+        if (exception instanceof OAuth2AuthenticationException) {
+            String code = ((OAuth2AuthenticationException) exception).getError().getErrorCode();
+            if (isAccountError(code)) {
+                errorCode = code;
+            }
+        }
+
+        log.debug("로그인 실패: {}", exception.getMessage());
+        response.sendRedirect(request.getContextPath() + "/login?error=" + errorCode);
+    }
+
+    private static boolean isAccountError(String code) {
+        return "account_not_linked".equals(code)
+                || "email_not_verified".equals(code)
+                || "account_ambiguous".equals(code)
+                || "account_disabled".equals(code);
     }
 }
