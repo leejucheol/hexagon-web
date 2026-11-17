@@ -22,7 +22,7 @@ public class AccountService {
     private AccountMapper accountMapper;
 
     // ----------------------------------------
-    // 2. 기존 보안 테스트 메서드
+    // 1. 기존 보안 테스트 메서드
     // ----------------------------------------
     @PreAuthorize("hasAuthority('PERMISSION_MY_INFO_READ')")
     public String getEmp(int empId) {
@@ -30,7 +30,7 @@ public class AccountService {
     }
 
     // ----------------------------------------
-    // 3. 기존 보안 테스트 메서드
+    // 2. 기존 보안 테스트 메서드
     // ----------------------------------------
     @PreAuthorize("hasAuthority('PERMISSION_ROLE_ASSIGN')")
     public String addPermission() {
@@ -38,14 +38,14 @@ public class AccountService {
     }
 
     // ----------------------------------------
-    // 4. 전체 역할 목록 조회
+    // 3. 전체 역할 목록 조회
     // ----------------------------------------
     public List<HrRole> getAllRoles() {
         return accountMapper.selectAllRoles();
     }
 
     // ----------------------------------------
-    // 5. 특정 계정 상세 조회
+    // 4. 특정 계정 상세 조회
     // ----------------------------------------
     public Account getDetail(Long accountId) {
 
@@ -62,7 +62,7 @@ public class AccountService {
     }
 
     // ----------------------------------------
-    // 6. 계정 권한 변경
+    // 5. 계정 권한 변경
     // ----------------------------------------
     @Transactional
     public void updateAccountRoles(
@@ -87,7 +87,7 @@ public class AccountService {
     }
 
     // ----------------------------------------
-    // 7. 계정 목록 조회 및 검색 ← 새로 추가하는 부분
+    // 6. 계정 목록 조회 및 검색 ← 새로 추가하는 부분
     // ----------------------------------------
     public List<Account> search(String keyword) {
 
@@ -99,7 +99,7 @@ public class AccountService {
     }
 
     // ----------------------------------------
-    // 8. 구글 로그인 계정 연결
+    // 7. 구글 로그인 계정 연결
     // ----------------------------------------
     @Transactional
     public GoogleAccountMatcher.Result linkGoogleAccount(
