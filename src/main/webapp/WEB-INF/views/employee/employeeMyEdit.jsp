@@ -161,12 +161,6 @@
                             취소
                         </button>
 
-                        <button type="button"
-                                id="passwordChangeBtn"
-                                class="myedit-btn myedit-btn-outline">
-                            비밀번호 변경
-                        </button>
-
                         <button type="submit"
                                 id="saveMyInfoBtn"
                                 class="myedit-btn myedit-btn-primary">
@@ -176,59 +170,6 @@
                 </section>
             </form>
         </main>
-    </div>
-</div>
-
-
-<!-- 비밀번호 변경 팝업 -->
-<div id="passwordModal" class="password-modal">
-
-    <div class="password-modal-content">
-
-        <div class="password-modal-header">
-            <h3>비밀번호 변경</h3>
-            <button type="button" id="closePasswordModal">×</button>
-        </div>
-
-        <p class="password-modal-description">
-            계정 보안을 위해 현재 비밀번호를 확인해 주세요.
-        </p>
-
-        <form id="passwordChangeForm">
-
-            <label for="currentPassword">현재 비밀번호</label>
-            <input type="password"
-                   id="currentPassword"
-                   autocomplete="current-password"
-                   required>
-
-            <label for="newPassword">새 비밀번호</label>
-            <input type="password"
-                   id="newPassword"
-                   autocomplete="new-password"
-                   required>
-
-            <label for="confirmPassword">새 비밀번호 확인</label>
-            <input type="password"
-                   id="confirmPassword"
-                   autocomplete="new-password"
-                   required>
-
-            <p id="passwordMessage" class="password-message"></p>
-
-            <div class="password-modal-buttons">
-                <button type="button"
-                        id="cancelPasswordModal"
-                        class="myedit-btn myedit-btn-outline">
-                    취소
-                </button>
-
-                <button type="submit"
-                        class="myedit-btn myedit-btn-primary">
-                    비밀번호 변경
-                </button>
-            </div>
-        </form>
     </div>
 </div>
 
@@ -527,130 +468,6 @@ document.getElementById("cancelMyEditBtn")
             }
         });
     });
-
-
-// ========================================
-// 6. 비밀번호 변경 팝업
-// ========================================
-
-const passwordModal = document.getElementById("passwordModal");
-const passwordForm = document.getElementById("passwordChangeForm");
-const passwordMessage = document.getElementById("passwordMessage");
-
-// 팝업 닫기
-const closePasswordPopup = () => {
-    passwordModal.classList.remove("show");
-    passwordForm.reset();
-    passwordMessage.textContent = "";
-};
-
-// 팝업 열기
-document.getElementById("passwordChangeBtn")
-    .addEventListener("click", () => {
-        passwordModal.classList.add("show");
-    });
-
-// X 버튼
-document.getElementById("closePasswordModal")
-    .addEventListener("click", closePasswordPopup);
-
-// 취소 버튼
-document.getElementById("cancelPasswordModal")
-    .addEventListener("click", closePasswordPopup);
-
-
-// ========================================
-// 7. 비밀번호 변경 API
-// ========================================
-
-passwordForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    const current =
-        document.getElementById("currentPassword").value;
-
-    const newPassword =
-        document.getElementById("newPassword").value;
-
-    const confirm =
-        document.getElementById("confirmPassword").value;
-
-    passwordMessage.style.color = "#bc3545";
-    passwordMessage.textContent = "";
-
-    // 입력값 검사
-    if (!current || !newPassword || !confirm) {
-        passwordMessage.textContent =
-            "모든 항목을 입력해 주세요.";
-        return;
-    }
-
-    if (newPassword.length < 8) {
-        passwordMessage.textContent =
-            "새 비밀번호는 8자 이상 입력해 주세요.";
-        return;
-    }
-
-    if (newPassword !== confirm) {
-        passwordMessage.textContent =
-            "새 비밀번호가 일치하지 않습니다.";
-        return;
-    }
-
-    if (current === newPassword) {
-        passwordMessage.textContent =
-            "현재 비밀번호와 다른 비밀번호를 입력해 주세요.";
-        return;
-    }
-
-    const submitBtn =
-        passwordForm.querySelector('button[type="submit"]');
-
-    submitBtn.disabled = true;
-
-    try {
-        const response = await fetch(
-            "${pageContext.request.contextPath}/api/accounts/me/password",
-            {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    currentPassword: current,
-                    newPassword: newPassword
-                })
-            }
-        );
-
-        if (!response.ok) {
-            const errorResponse = await response.json();
-
-            throw new Error(
-                errorResponse.message || "요청 처리에 실패했습니다."
-            );
-        }
-
-        closePasswordPopup();
-
-        // 비밀번호 변경 완료 팝업
-        showInfoModal({
-            type: "success",
-            title: "비밀번호 변경 완료",
-            message: "비밀번호가 정상적으로 변경되었습니다.",
-            description: "다음 로그인부터 새 비밀번호를 사용해 주세요.",
-            cancelText: "닫기",
-            confirmText: "확인"
-        });
-
-    } catch (error) {
-        console.error("비밀번호 변경 오류:", error);
-        passwordMessage.textContent = error.message;
-
-    } finally {
-        submitBtn.disabled = false;
-    }
-});
 
 </script>
 </body>

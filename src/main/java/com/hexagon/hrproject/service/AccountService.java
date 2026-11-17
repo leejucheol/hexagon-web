@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,75 +19,6 @@ public class AccountService {
 
     @Autowired
     private AccountMapper accountMapper;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    // ----------------------------------------
-    // 1. 로그인한 계정의 비밀번호 변경
-    // ----------------------------------------
-    @Transactional
-    public void changePassword(
-            int accountId,
-            String currentPassword,
-            String newPassword) {
-
-        // 계정 조회
-        Account account =
-                accountMapper.select((long) accountId);
-
-        if (account == null) {
-            throw new BusinessException(
-                ErrorCode.ACCOUNT_NOT_FOUND
-            );
-        }
-
-        // 비밀번호 입력 검사
-        if (currentPassword == null || currentPassword.isEmpty()
-                || newPassword == null || newPassword.isEmpty()) {
-
-            throw new BusinessException(
-                ErrorCode.PASSWORD_REQUIRED
-            );
-        }
-
-        // 현재 비밀번호 확인
-        if (!passwordEncoder.matches(
-                currentPassword, account.getPassword())) {
-
-            throw new BusinessException(
-                ErrorCode.CURRENT_PASSWORD_MISMATCH
-            );
-        }
-
-        // 최소 길이 검사
-        if (newPassword.length() < 8) {
-            throw new BusinessException(
-                ErrorCode.PASSWORD_TOO_SHORT
-            );
-        }
-
-        // 기존 비밀번호와 동일한지 검사
-        if (currentPassword.equals(newPassword)) {
-            throw new BusinessException(
-                ErrorCode.PASSWORD_SAME_AS_CURRENT
-            );
-        }
-
-        // 비밀번호 암호화
-        String encodedPassword =
-                passwordEncoder.encode(newPassword);
-
-        // DB 수정
-        int result =
-                accountMapper.updatePassword(accountId, encodedPassword);
-
-        if (result == 0) {
-            throw new BusinessException(
-                ErrorCode.PASSWORD_UPDATE_FAIL
-            );
-        }
-    }
 
     // ----------------------------------------
     // 2. 기존 보안 테스트 메서드

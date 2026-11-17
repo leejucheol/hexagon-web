@@ -42,11 +42,6 @@ public enum ErrorCode {
 
 	// 계정 관련
 	ACCOUNT_NOT_FOUND(404, "ACCOUNT_NOT_FOUND", "계정을 찾을 수 없습니다."),
-	PASSWORD_REQUIRED(400, "PASSWORD_REQUIRED", "비밀번호를 입력해 주세요."),
-	CURRENT_PASSWORD_MISMATCH(400, "CURRENT_PASSWORD_MISMATCH", "현재 비밀번호가 일치하지 않습니다."),
-	PASSWORD_TOO_SHORT(400, "PASSWORD_TOO_SHORT", "새 비밀번호는 8자 이상이어야 합니다."),
-	PASSWORD_SAME_AS_CURRENT(400, "PASSWORD_SAME_AS_CURRENT", "기존 비밀번호와 다른 비밀번호를 입력해 주세요."),
-	PASSWORD_UPDATE_FAIL(500, "PASSWORD_UPDATE_FAIL", "비밀번호 변경에 실패했습니다."),
 	LOGIN_ID_REQUIRED(400, "LOGIN_ID_REQUIRED", "로그인 ID를 입력해 주세요."),
 	LOGIN_ID_DUPLICATED(409, "LOGIN_ID_DUPLICATED", "이미 사용 중인 로그인 ID입니다."),
 
