@@ -24,11 +24,9 @@
 	<insert id="insert" parameterType="Account"
 		useGeneratedKeys="true" keyProperty="accountId">
 		INSERT INTO account (emp_id,
-		login_id, password, enabled)
-		VALUES (#{emp.empId}, #{loginId},
-		#{password}, 1)
+		login_id, enabled)
+		VALUES (#{emp.empId}, #{loginId}, 1)
 	</insert>
-	<!-- NULL -> ${password} -->
 
 	<!-- 용훈 추가 ~ -->
 	<insert id="insertDefaultEmployeeRole">
@@ -88,13 +86,6 @@
 		account_id = #{accountId}
 	</update>
 
-	<!-- (사원용)로그인한 계정의 비밀번호 변경 -->
-	<update id="updatePassword">
-		UPDATE account
-		SET password = #{password}
-		WHERE
-		account_id = #{accountId}
-	</update>
 	<!-- ========================================== -->
 	<!-- 관리자 권한/계정 관리를 위해 추가된 쿼리들 -->
 	<!-- ========================================== -->

@@ -9,8 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 
@@ -56,12 +54,10 @@ public class SecurityConfig {
                     antMatcher(HttpMethod.GET, "/api/employees/me/")
                 ).authenticated()
 
-                // 본인 정보 및 본인 비밀번호 변경
+                // 본인 정보 수정
                 .requestMatchers(
                     antMatcher(HttpMethod.PUT, "/api/employees/me"),
-                    antMatcher(HttpMethod.PUT, "/api/employees/me/"),
-                    antMatcher(HttpMethod.PUT, "/api/accounts/me/password"),
-                    antMatcher(HttpMethod.PUT, "/api/accounts/me/password/")
+                    antMatcher(HttpMethod.PUT, "/api/employees/me/")
                 ).authenticated()
 
                 // 관리자 화면 및 관리자 API
@@ -120,10 +116,5 @@ public class SecurityConfig {
             );
 
         return http.build();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 }

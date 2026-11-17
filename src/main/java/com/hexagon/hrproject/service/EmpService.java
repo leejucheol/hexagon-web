@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,9 +21,6 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class EmpService {
-	// ~~ 용훈
-	private final PasswordEncoder passwordEncoder;
-	// ~~ 용훈
 	private final AccountMapper accountMapper;
 	private final EmpMapper empMapper;
 
@@ -99,14 +95,6 @@ public class EmpService {
 
 		// 생성된 사번을 계정에 연결
 		account.setEmp(emp);
-
-		// ~~ 용훈 추가
-		if (account.getPassword() == null || account.getPassword().length() < 8) {
-			throw new IllegalArgumentException("비밀번호는 8자 이상이어야 합니다.");
-		}
-
-		account.setPassword(passwordEncoder.encode(account.getPassword()));
-		// ~~
 
 		// 로그인 계정 등록
 		int accountResult = accountMapper.insert(account);

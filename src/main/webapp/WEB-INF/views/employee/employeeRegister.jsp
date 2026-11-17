@@ -114,16 +114,6 @@
 							<input type="text" id="loginId" placeholder="로그인 ID 입력" maxlength="30" required>
 						</div>
 
-                        <!-- 초기 비밀번호 -->
-                        <div class="register-field field-password">
-                            <label for="password">초기 비밀번호 *</label>
-                            <input type="password"
-                                   id="password"
-                                   placeholder="초기 비밀번호 입력"
-                                   minlength="8"
-                                   required>
-                        </div>
-
                         <!-- 입사일 -->
                         <div class="register-field field-hiredate">
                             <label for="hiredate">입사일 *</label>
@@ -246,8 +236,7 @@ const registerEmployee = async () => {
     };
     
     const account = {
-    		emp:emp, loginId:$("#loginId").val().trim(),
-    		password : $("#password").val()
+    		emp:emp, loginId:$("#loginId").val().trim()
     };
 
     try {
