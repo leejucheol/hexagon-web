@@ -8,8 +8,8 @@ import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Component;
 
-import com.hexagon.hrproject.domain.Account;
-import com.hexagon.hrproject.mapper.AccountMapper;
+import com.hexagon.hrproject.service.AccountService;
+import com.hexagon.hrproject.service.GoogleAccountMatcher;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,31 +18,23 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class GoogleOidcUserService implements OAuth2UserService<OidcUserRequest, OidcUser> {
 
-	private final AccountMapper accountMapper;
+	private final AccountService accountService;
 
 	private final OidcUserService delegate = new OidcUserService();
 
 	@Override
 	public OidcUser loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
 		OidcUser oidcUser = delegate.loadUser(userRequest);
-		String sub = oidcUser.getSubject();
 
-		GoogleAccountMatcher.Result result = GoogleAccountMatcher.match(
-				accountMapper.selectByGoogleSub(sub),
-				accountMapper.selectByEmpEmail(oidcUser.getEmail()),
-				Boolean.TRUE.equals(oidcUser.getEmailVerified()),
-				sub);
+		GoogleAccountMatcher.Result result = accountService.linkGoogleAccount(
+				oidcUser.getSubject(),
+				oidcUser.getEmail(),
+				Boolean.TRUE.equals(oidcUser.getEmailVerified()));
 
-		if (result.getErrorCode() != null) {
-			throw new OAuth2AuthenticationException(new OAuth2Error(result.getErrorCode()));
+		if (result.getError() != null) {
+			throw new OAuth2AuthenticationException(new OAuth2Error(result.getError().getCode()));
 		}
 
-		Account account = result.getAccount();
-		if (result.isSaveSub()) {
-			accountMapper.updateGoogleSub(account.getAccountId(), sub);
-			account = accountMapper.selectByGoogleSub(sub);
-		}
-
-		return new AccountDetails(account, oidcUser);
+		return new AccountDetails(result.getAccount(), oidcUser);
 	}
 }

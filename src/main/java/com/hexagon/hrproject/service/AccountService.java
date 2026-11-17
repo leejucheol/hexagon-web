@@ -1,6 +1,7 @@
 
 package com.hexagon.hrproject.service;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,5 +96,39 @@ public class AccountService {
         }
 
         return accountMapper.search(keyword);
+    }
+
+    // ----------------------------------------
+    // 8. 구글 로그인 계정 연결
+    // ----------------------------------------
+    @Transactional
+    public GoogleAccountMatcher.Result linkGoogleAccount(
+            String sub,
+            String email,
+            boolean emailVerified) {
+
+        Account bySub = accountMapper.selectByGoogleSub(sub);
+
+        List<Account> byEmail = bySub != null
+            ? Collections.<Account>emptyList()
+            : accountMapper.selectByEmpEmail(email);
+
+        GoogleAccountMatcher.Result result =
+            GoogleAccountMatcher.match(bySub, byEmail, emailVerified);
+
+        if (result.isSaveSub()) {
+            Account account = result.getAccount();
+
+            // 판정 뒤 다른 요청이 먼저 연결했으면 갱신되지 않는다
+            if (accountMapper.updateGoogleSub(account.getAccountId(), sub) != 1) {
+                return GoogleAccountMatcher.error(
+                    GoogleLoginError.ACCOUNT_NOT_LINKED
+                );
+            }
+
+            account.setGoogleSub(sub);
+        }
+
+        return result;
     }
 }

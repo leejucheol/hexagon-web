@@ -34,12 +34,8 @@ public class AccountDetails implements UserDetails, OidcUser {
 	private List<GrantedAuthority> authorities;
 
 	public AccountDetails(Account account, OidcUser oidcUser) {
-		this(account);
-		this.oidcUser = oidcUser;
-	}
-
-	public AccountDetails(Account account) {
 		this.account = account;
+		this.oidcUser = oidcUser;
 
 		Set<GrantedAuthority> authSet = new LinkedHashSet<>();
 
