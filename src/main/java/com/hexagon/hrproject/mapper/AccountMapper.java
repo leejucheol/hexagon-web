@@ -12,6 +12,13 @@ public interface AccountMapper {
 
 	Account selectByLoginId(String loginId);
 
+	Account selectByGoogleSub(String googleSub);
+
+	// 사원 이메일이 일치하는 계정 목록 조회
+	List<Account> selectByEmpEmail(String email);
+
+	int updateGoogleSub(@Param("accountId") int accountId, @Param("googleSub") String googleSub);
+
 	int insert(Account account);
 
 	int countByLoginId(@Param("loginId") String loginId);
